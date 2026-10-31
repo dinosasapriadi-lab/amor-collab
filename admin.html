@@ -171,6 +171,8 @@
   .rtab.active{color:#fff}
   .ktitle{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
   .ktitle:first-of-type{margin-top:6px}
+  .gtitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 4px;padding:9px 12px;border-radius:12px;background:var(--sand);font-weight:700;font-size:14px}
+  .gtitle .mini-btn{font-size:12px;padding:6px 10px}
   .ktitle h4{font-size:15px}
   .mini-btn{padding:7px 12px;border-radius:999px;background:var(--sea);color:#fff;font-size:12.5px;font-weight:700}
   .arow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 0;border-top:1px dashed var(--line)}
@@ -591,27 +593,43 @@ function adminView(){
     <div class="card">
       <h3>Menu ${esc(r.nama)}</h3>
       <div class="hint">Tekan ✏️ untuk edit, ↑↓ untuk urutan, 👁 untuk sembunyikan menu yang sedang habis.</div>
-      ${KAT.map(t => { const list = r.menu[t.k]; return `
-        <div class="ktitle"><h4>${t.adminLabel} <span class="tag">${list.length}</span></h4>
-          <button class="mini-btn" data-new="${t.k}">+ Tambah</button></div>
-        ${list.length ? list.map((i, idx) => `
+      ${KAT.map(t => { const list = r.menu[t.k];
+        const row = (i, idx, first, last) => `
           <div class="arow">
             <div class="em">${safeUrl(i.f) ? `<img src="${esc(i.f)}" alt="">` : esc(i.e)}</div>
             <div class="tx">
-              <div class="nm">${esc(i.n)}${i.n_en?`<span class="tag">EN ✓</span>`:''}${i.g?`<span class="tag">${esc(i.g)}</span>`:''}${i.off?`<span class="tag off">Disembunyikan</span>`:''}</div>
+              <div class="nm">${esc(i.n)}${safeUrl(i.f)?`<span class="tag">📷</span>`:''}${i.n_en?`<span class="tag">EN ✓</span>`:''}${i.g && t.k!=='biasa'?`<span class="tag">${esc(i.g)}</span>`:''}${i.off?`<span class="tag off">Disembunyikan</span>`:''}</div>
               <div class="pr">${summary(i)}</div>
             </div>
             ${state.confirmDel === i.id ? `<div class="confirm">Hapus?
                 <button class="yes" data-delyes="${t.k}|${idx}">Ya</button>
                 <button class="no" data-delno>Batal</button></div>`
             : `<div class="icons">
-                <button class="ib" data-up="${t.k}|${idx}" ${idx===0?'disabled':''} aria-label="Naik">↑</button>
-                <button class="ib" data-down="${t.k}|${idx}" ${idx===list.length-1?'disabled':''} aria-label="Turun">↓</button>
+                <button class="ib" data-up="${t.k}|${idx}" ${first?'disabled':''} aria-label="Naik">↑</button>
+                <button class="ib" data-down="${t.k}|${idx}" ${last?'disabled':''} aria-label="Turun">↓</button>
                 <button class="ib" data-hide="${t.k}|${idx}" aria-label="Tampil/sembunyi" title="Tampilkan/sembunyikan">${i.off?'🚫':'👁'}</button>
                 <button class="ib" data-edit="${t.k}|${idx}" aria-label="Edit">✏️</button>
                 <button class="ib del" data-del="${esc(i.id)}" aria-label="Hapus">🗑</button>
               </div>`}
-          </div>`).join('') : `<div class="hint" style="padding:6px 0 4px">Belum ada menu.</div>`}`; }).join('')}
+          </div>`;
+        // Menu Biasa: dipisah per jenis (Makanan, Minuman, ...)
+        if (t.k === 'biasa') {
+          const order = ['Makanan','Minuman','Dessert','Snack'];
+          const extra = []; list.forEach(i => { const g = i.g || ''; if (!order.includes(g) && !extra.includes(g)) extra.push(g); });
+          const groups = ['Makanan','Minuman'].concat(order.slice(2).filter(g => list.some(i => i.g === g)), extra);
+          return `<div class="ktitle"><h4>${t.adminLabel} <span class="tag">${list.length}</span></h4></div>` +
+            groups.map(g => {
+              const idxs = list.map((i, idx) => (i.g || '') === g ? idx : -1).filter(x => x >= 0);
+              return `<div class="gtitle"><span>${GROUP_IC[g] || '🍽️'} ${esc(g || 'Tanpa jenis')} <span class="tag">${idxs.length}</span></span>
+                  <button class="mini-btn" data-new="biasa" data-g="${esc(g)}">+ Tambah ${esc(g || '')}</button></div>
+                ${idxs.length ? idxs.map((idx, n) => row(list[idx], idx, n === 0, n === idxs.length - 1)).join('')
+                  : `<div class="hint" style="padding:4px 0 8px">Belum ada ${esc((g || 'menu').toLowerCase())}.</div>`}`;
+            }).join('');
+        }
+        return `
+        <div class="ktitle"><h4>${t.adminLabel} <span class="tag">${list.length}</span></h4>
+          <button class="mini-btn" data-new="${t.k}">+ Tambah</button></div>
+        ${list.length ? list.map((i, idx) => row(i, idx, idx === 0, idx === list.length - 1)).join('') : `<div class="hint" style="padding:6px 0 4px">Belum ada menu.</div>`}`; }).join('')}
     </div>
 
     <div class="card">
@@ -732,14 +750,15 @@ function bindAdmin(){
   });
   on('[data-ar]', b => { state.aResto = b.dataset.ar; state.confirmDel = null; render(); });
   const at = s => { const [k, i] = s.split('|'); return [d.resto[state.aResto].menu[k], Number(i), k]; };
-  on('[data-up]', b => { const [l,i] = at(b.dataset.up); [l[i-1], l[i]] = [l[i], l[i-1]]; markDirty(); render(); });
-  on('[data-down]', b => { const [l,i] = at(b.dataset.down); [l[i+1], l[i]] = [l[i], l[i+1]]; markDirty(); render(); });
+  const sameGroup = (l, i, k, dir) => { for (let j = i + dir; j >= 0 && j < l.length; j += dir) if (k !== 'biasa' || (l[j].g || '') === (l[i].g || '')) return j; return -1; };
+  on('[data-up]', b => { const [l,i,k] = at(b.dataset.up); const j = sameGroup(l, i, k, -1); if (j < 0) return; [l[j], l[i]] = [l[i], l[j]]; markDirty(); render(); });
+  on('[data-down]', b => { const [l,i,k] = at(b.dataset.down); const j = sameGroup(l, i, k, 1); if (j < 0) return; [l[j], l[i]] = [l[i], l[j]]; markDirty(); render(); });
   on('[data-hide]', b => { const [l,i] = at(b.dataset.hide); if (l[i].off) delete l[i].off; else l[i].off = true; markDirty(); render(); });
   on('[data-del]', b => { state.confirmDel = b.dataset.del; render(); });
   on('[data-delno]', () => { state.confirmDel = null; render(); });
   on('[data-delyes]', b => { const [l,i] = at(b.dataset.delyes); l.splice(i,1); state.confirmDel = null; markDirty(); render(); });
   on('[data-edit]', b => { const [l,i,k] = at(b.dataset.edit); openEditor(k, l[i], false); });
-  on('[data-new]', b => openEditor(b.dataset.new, {id:uid(), n:'', d:'', e:'🍽️', h:''}, true));
+  on('[data-new]', b => openEditor(b.dataset.new, {id:uid(), n:'', d:'', e:(b.dataset.g === 'Minuman' ? '🥤' : '🍽️'), h:'', g:(b.dataset.new === 'biasa' ? (b.dataset.g ?? 'Makanan') : '')}, true));
   on('[data-discard]', () => { state.draft = clone(CFG); state.dirty = false; state.saveMsg = ''; render(); });
   on('[data-save]', save);
   on('[data-copy]', async () => {
