@@ -82,6 +82,25 @@
   .ghead:first-child{margin-top:2px}
   .item{display:flex;gap:14px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
   .item.sel{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .item.has-photo{flex-direction:column;padding:0;overflow:hidden;gap:0}
+  .item.has-photo .info{padding:14px 16px 14px}
+  .photo{display:block;width:100%;aspect-ratio:16/10;background:var(--sand);overflow:hidden;cursor:zoom-in}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .photo:hover img{transform:scale(1.03)}
+  .subtabs{display:flex;gap:8px;margin:0 0 14px;padding:4px;background:#fff;border:1px solid var(--line);border-radius:16px}
+  .sub{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 8px;border-radius:12px;font-weight:700;font-size:14.5px;color:var(--muted)}
+  .sub span{font-size:18px}
+  .sub.on{background:var(--accent);color:#fff}
+  .zoom{position:fixed;inset:0;z-index:40;background:rgba(15,12,10,.9);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+  .zoom img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .zoom .zx{position:absolute;top:16px;right:16px;background:#fff}
+  .ph-edit{display:flex;gap:14px;align-items:center}
+  .ph-prev{width:120px;aspect-ratio:16/10;border-radius:12px;background:var(--sand);overflow:hidden;display:grid;place-items:center;font-size:30px;flex-shrink:0;border:1px solid var(--line)}
+  .ph-prev img{width:100%;height:100%;object-fit:cover}
+  .ph-act{flex:1;min-width:0}
+  .ph-btn{display:inline-block;margin:0;cursor:pointer;color:#fff;font-size:13px}
+  .arow .em img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+  .arow .em{overflow:hidden}
   .thumb{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;font-size:34px;flex-shrink:0;background:var(--sand)}
   .info{flex:1;min-width:0}
   .info h4{font-size:15px;font-weight:700;line-height:1.3}
@@ -287,7 +306,7 @@ const T = {
     kat:{ biasa:['Menu Biasa','Menu Biasa','Makanan & minuman satuan, pesan sesuai selera'],
           bundling:['Bundling Package','Bundling','Paket hemat untuk berdua atau rombongan'],
           catering:['Family Catering','Family','Paket makan keluarga & grup besar'] },
-    groups:{},
+    groups:{}, other:'Lainnya', zoomClose:'Tutup foto',
     greet:h => (h>=4&&h<11)?'pagi':(h>=11&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam',
     msg:(g,nama,lines,jam) => `Hallo selamat ${g}, saya dengan ${nama}, saya sedang menginap di Gili Amor, saya memesan:\n${lines}\n\ndan akan datang jam ${jam}`,
     phName:'(nama tamu)', phTime:'(jam kedatangan)', locale:'id-ID'
@@ -309,7 +328,7 @@ const T = {
     kat:{ biasa:['Regular Menu','Regular','À la carte food & drinks'],
           bundling:['Bundling Package','Bundles','Value packages for two or for groups'],
           catering:['Family Catering','Family','Family meals & large groups'] },
-    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' },
+    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' }, other:'Others', zoomClose:'Close photo',
     greet:h => (h>=4&&h<12)?'good morning':(h>=12&&h<18)?'good afternoon':'good evening',
     msg:(g,nama,lines,jam) => `Hello, ${g}. My name is ${nama} and I am staying at Gili Amor. I would like to order:\n${lines}\n\nI will arrive at ${jam}`,
     phName:'(guest name)', phTime:'(arrival time)', locale:'en-GB'
@@ -345,6 +364,8 @@ const disc = h => (Number(h)||0) * (100 - (Number(CFG.promo.diskon)||0)) / 100;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const color = c => /^#[0-9a-f]{6}$/i.test(c||'') ? c : '#0f6b6b';
 const digits = s => String(s||'').replace(/\D/g,'');
+const safeUrl = u => /^https:\/\/[^\s"'<>]+$/.test(u||'') ? u : '';
+const GROUP_IC = { 'Makanan':'🍛', 'Minuman':'🥤', 'Dessert':'🍨', 'Snack':'🍟' };
 const waNum = s => { const d = digits(s); return d.startsWith('0') ? '62' + d.slice(1) : d; };
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random()*16|0; return (c === 'x' ? r : (r&3|8)).toString(16); }));
 const fmtDate = d => { try { return new Date(d+'T12:00:00+08:00').toLocaleDateString(L().locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Makassar'}); } catch(e){ return d; } };
@@ -378,6 +399,7 @@ function normalize(d){
         if (i.n_en) it.n_en = String(i.n_en);
         if (i.d_en) it.d_en = String(i.d_en);
         if (i.off) it.off = true;
+        if (safeUrl(i.f)) it.f = i.f;
         if (Array.isArray(i.v) && i.v.length) it.v = i.v.map(v => { const o = {n:String(v.n||''), h:Math.max(0, Number(v.h)||0)}; if (v.n_en) o.n_en = String(v.n_en); return o; });
         else it.h = Math.max(0, Number(i.h)||0);
         return it;
@@ -405,6 +427,7 @@ function buildMessage(key){
   const jam = state.jam ? state.jam.replace(':', '.') : t.phTime;
   return t.msg(t.greet(new Date().getHours()), nama, lines, jam);
 }
+
 
 /* ---------- SUPABASE ---------- */
 const CONF = window.AMOR_CONFIG || {};
@@ -435,6 +458,7 @@ async function loadFromSupabase(){
     if (x.nama_en) o.n_en = x.nama_en;
     if (x.deskripsi_en) o.d_en = x.deskripsi_en;
     if (!x.tersedia) o.off = true;
+    if (x.foto_url) o.f = x.foto_url;
     if (vars[x.id] && vars[x.id].length) o.v = vars[x.id]; else o.h = x.harga || 0;
     R.menu[x.kategori].push(o);
   });
@@ -450,7 +474,7 @@ async function saveToSupabase(d){
     ids.add(it.id);
     rows.push({ id:it.id, restaurant_id:k, kategori:kat, kelompok:it.g || null, nama:it.n, deskripsi:it.d || '', emoji:it.e || '🍽️',
                 harga: it.v ? null : (Number(it.h) || 0), tersedia: !it.off, urutan:i + 1,
-                nama_en: it.n_en || null, deskripsi_en: it.d_en || null });
+                nama_en: it.n_en || null, deskripsi_en: it.d_en || null, foto_url: it.f || null });
     (it.v || []).forEach((v, j) => vrows.push({ item_id:it.id, nama:v.n, nama_en:v.n_en || null, harga:Number(v.h) || 0, urutan:j + 1 }));
   })));
   if (rows.length) await chk(sb.from('menu_items').upsert(rows));
@@ -459,6 +483,34 @@ async function saveToSupabase(d){
   if (del.length) await chk(sb.from('menu_items').delete().in('id', del));
   if (ids.size) await chk(sb.from('menu_variants').delete().in('item_id', [...ids]));
   if (vrows.length) await chk(sb.from('menu_variants').insert(vrows));
+  // bersihkan foto yang tidak dipakai lagi oleh menu mana pun
+  try {
+    const used = new Set(rows.map(r => r.foto_url).filter(Boolean).map(photoPath));
+    const prev = (state.photoBaseline || []).filter(p => p && !used.has(p));
+    if (prev.length) await sb.storage.from(BUCKET).remove(prev);
+  } catch(e) { console.warn('cleanup foto', e); }
+}
+
+/* ---------- FOTO (Supabase Storage) ---------- */
+const BUCKET = 'menu-photos';
+const photoPath = url => { const k = '/object/public/' + BUCKET + '/'; const i = String(url||'').indexOf(k); return i < 0 ? '' : decodeURIComponent(String(url).slice(i + k.length)); };
+function loadImage(file){
+  return new Promise((res, rej) => { const u = URL.createObjectURL(file); const im = new Image();
+    im.onload = () => { URL.revokeObjectURL(u); res(im); }; im.onerror = () => { URL.revokeObjectURL(u); rej(new Error('Format foto tidak didukung. Gunakan JPG atau PNG.')); }; im.src = u; });
+}
+async function uploadPhoto(file, resto){
+  if (file.size > 25 * 1024 * 1024) throw new Error('Ukuran foto terlalu besar (maks 25 MB).');
+  const im = await loadImage(file);
+  const max = 1400, sc = Math.min(1, max / Math.max(im.naturalWidth, im.naturalHeight));
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(im.naturalWidth * sc); cv.height = Math.round(im.naturalHeight * sc);
+  cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.82));
+  if (!blob) throw new Error('Foto tidak bisa diproses.');
+  const path = `${resto}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
+  const { error } = await sb.storage.from(BUCKET).upload(path, blob, { contentType: 'image/jpeg', cacheControl: '31536000' });
+  if (error) throw error;
+  return sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
 }
 
 /* ---------- AUTH ---------- */
@@ -544,7 +596,7 @@ function adminView(){
           <button class="mini-btn" data-new="${t.k}">+ Tambah</button></div>
         ${list.length ? list.map((i, idx) => `
           <div class="arow">
-            <div class="em">${esc(i.e)}</div>
+            <div class="em">${safeUrl(i.f) ? `<img src="${esc(i.f)}" alt="">` : esc(i.e)}</div>
             <div class="tx">
               <div class="nm">${esc(i.n)}${i.n_en?`<span class="tag">EN ✓</span>`:''}${i.g?`<span class="tag">${esc(i.g)}</span>`:''}${i.off?`<span class="tag off">Disembunyikan</span>`:''}</div>
               <div class="pr">${summary(i)}</div>
@@ -586,9 +638,26 @@ function editView(){
       <div class="sheet-head"><h3>${e.isNew ? 'Tambah Menu' : 'Edit Menu'}</h3><button class="x" data-eclose aria-label="Tutup">✕</button></div>
       <label for="e-kat">Kategori</label>
       <select id="e-kat">${KAT.map(t => `<option value="${t.k}" ${e.kat===t.k?'selected':''}>${t.adminLabel}</option>`).join('')}</select>
-      <label for="e-g">Kelompok (opsional)</label>
-      <input id="e-g" list="glist" value="${esc(it.g||'')}" placeholder="Makanan / Minuman / Dessert">
-      <datalist id="glist"><option value="Makanan"><option value="Minuman"><option value="Dessert"><option value="Snack"></datalist>
+      <label for="e-g">Jenis</label>
+      <select id="e-g">
+        ${['Makanan','Minuman','Dessert','Snack'].concat(it.g && !['Makanan','Minuman','Dessert','Snack'].includes(it.g) ? [it.g] : [])
+          .map(g => `<option value="${esc(g)}" ${it.g===g?'selected':''}>${GROUP_IC[g]||'🍽️'} ${esc(g)}</option>`).join('')}
+        <option value="" ${!it.g?'selected':''}>— Tanpa jenis (paket / lainnya)</option>
+      </select>
+      <div class="hint">Di Menu Biasa, tamu memilih tab Makanan atau Minuman, jadi pastikan jenisnya benar.</div>
+
+      <label>Foto menu</label>
+      <div class="ph-edit">
+        <div class="ph-prev">${safeUrl(it.f) ? `<img src="${esc(it.f)}" alt="">` : `<span>${esc(it.e||'🍽️')}</span>`}</div>
+        <div class="ph-act">
+          ${typeof uploadPhoto === 'function' ? `
+            <label class="mini-btn ph-btn">📷 ${safeUrl(it.f) ? 'Ganti foto' : 'Pilih foto'}
+              <input type="file" id="e-file" accept="image/jpeg,image/png,image/webp,image/*" hidden></label>
+            ${safeUrl(it.f) ? `<button class="linkish" data-phdel style="color:var(--danger)">Hapus foto</button>` : ''}
+            <div class="hint" id="ph-msg">${e.phMsg ? esc(e.phMsg) : 'JPG/PNG, otomatis dikecilkan. Foto landscape terlihat paling bagus.'}</div>`
+          : `<div class="hint">Upload foto tersedia di versi online (Supabase).</div>`}
+        </div>
+      </div>
       <div class="row2">
         <div style="grid-column:span 1"><label for="e-n">Nama menu</label><input id="e-n" value="${esc(it.n)}" placeholder="Nasi Goreng"></div>
         <div><label for="e-e">Gambar (emoji)</label><input id="e-e" value="${esc(it.e)}" placeholder="🍛"></div>
@@ -624,6 +693,7 @@ function editView(){
     </div>
   </div>`;
 }
+
 
 
 /* ---------- RENDER & EVENTS ---------- */
@@ -695,7 +765,7 @@ function openEditor(kat, item, isNew){
 function readEditor(){
   const e = state.edit, $ = id => document.getElementById(id);
   e.kat = $('e-kat').value;
-  e.item.g = $('e-g').value.trim();
+  e.item.g = $('e-g').value;
   e.item.n = $('e-n').value;
   e.item.e = $('e-e').value;
   e.item.d = $('e-d').value;
@@ -710,15 +780,27 @@ function bindEditor(){
   on('[data-eclose]', () => { state.edit = null; render(); });
   on('[data-eclose-bg]', (o, ev) => { if (ev.target === o){ state.edit = null; render(); } });
   document.getElementById('e-hasv').onchange = ev => { readEditor(); e.hasV = ev.target.checked; render(); };
+  const fileIn = document.getElementById('e-file');
+  if (fileIn) fileIn.onchange = async () => {
+    const file = fileIn.files && fileIn.files[0]; if (!file) return;
+    readEditor();
+    e.phMsg = 'Mengunggah foto…'; e.busy = true; render();
+    try { e.item.f = await uploadPhoto(file, state.aResto); e.phMsg = '✓ Foto terunggah. Tekan "Simpan perubahan" lalu "Simpan & Terbitkan".'; }
+    catch (err) { console.error(err); e.phMsg = 'Gagal mengunggah: ' + (err && err.message ? err.message : 'coba foto lain.'); }
+    e.busy = false; render();
+  };
+  on('[data-phdel]', () => { readEditor(); delete e.item.f; e.phMsg = 'Foto dihapus dari menu ini.'; render(); });
   on('[data-vadd]', () => { readEditor(); e.v.push({n:'',h:''}); render(); });
   on('[data-vdel]', b => { readEditor(); e.v.splice(Number(b.dataset.vdel),1); render(); });
   on('[data-esave]', () => {
+    if (e.busy) return;
     readEditor();
     const err = document.getElementById('e-err');
     const it = e.item;
     if (!it.n.trim()) { err.textContent = 'Nama menu wajib diisi.'; return; }
     const out = { id:it.id, n:it.n.trim(), d:it.d.trim(), e:(it.e.trim()||'🍽️') };
     if (it.g) out.g = it.g;
+    if (safeUrl(it.f)) out.f = it.f;
     if (it.n_en && it.n_en.trim()) out.n_en = it.n_en.trim();
     if (it.d_en && it.d_en.trim()) out.d_en = it.d_en.trim();
     if (it.off) out.off = true;
@@ -743,6 +825,7 @@ function bindEditor(){
 }
 
 
+
 async function save(){
   if (state.saving) return;
   const d = normalize(state.draft);
@@ -751,7 +834,7 @@ async function save(){
   state.saving = true; render();
   try {
     await saveToSupabase(d);
-    CFG = await loadFromSupabase(); state.draft = clone(CFG); state.dirty = false;
+    CFG = await loadFromSupabase(); state.draft = clone(CFG); state.dirty = false; setBaseline();
     state.saveMsg = '✓ Tersimpan. Menu baru sudah tampil di halaman tamu.';
   } catch(err) {
     console.error(err);
@@ -760,6 +843,7 @@ async function save(){
   state.saving = false; render();
 }
 
+function setBaseline(){ const out = []; CFG.order.forEach(k => KAT.forEach(({k:kat}) => CFG.resto[k].menu[kat].forEach(i => { if (i.f) out.push(photoPath(i.f)); }))); state.photoBaseline = out; }
 async function afterLogin(session){
   state.session = session; state.authMsg = '';
   state.isAdmin = false; state.dbStatus = 'loading'; state.draft = null; state.dirty = false;
@@ -768,7 +852,7 @@ async function afterLogin(session){
   try {
     const me = await chk(sb.from('admins').select('user_id').eq('user_id', session.user.id).maybeSingle());
     state.isAdmin = !!me;
-    if (state.isAdmin) { CFG = await loadFromSupabase(); state.dbStatus = 'ok'; }
+    if (state.isAdmin) { CFG = await loadFromSupabase(); state.dbStatus = 'ok'; setBaseline(); }
   } catch(e) { console.error(e); state.dbStatus = 'error'; }
   render();
 }

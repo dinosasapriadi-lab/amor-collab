@@ -82,6 +82,25 @@
   .ghead:first-child{margin-top:2px}
   .item{display:flex;gap:14px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
   .item.sel{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .item.has-photo{flex-direction:column;padding:0;overflow:hidden;gap:0}
+  .item.has-photo .info{padding:14px 16px 14px}
+  .photo{display:block;width:100%;aspect-ratio:16/10;background:var(--sand);overflow:hidden;cursor:zoom-in}
+  .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .photo:hover img{transform:scale(1.03)}
+  .subtabs{display:flex;gap:8px;margin:0 0 14px;padding:4px;background:#fff;border:1px solid var(--line);border-radius:16px}
+  .sub{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 8px;border-radius:12px;font-weight:700;font-size:14.5px;color:var(--muted)}
+  .sub span{font-size:18px}
+  .sub.on{background:var(--accent);color:#fff}
+  .zoom{position:fixed;inset:0;z-index:40;background:rgba(15,12,10,.9);display:flex;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+  .zoom img{max-width:100%;max-height:100%;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .zoom .zx{position:absolute;top:16px;right:16px;background:#fff}
+  .ph-edit{display:flex;gap:14px;align-items:center}
+  .ph-prev{width:120px;aspect-ratio:16/10;border-radius:12px;background:var(--sand);overflow:hidden;display:grid;place-items:center;font-size:30px;flex-shrink:0;border:1px solid var(--line)}
+  .ph-prev img{width:100%;height:100%;object-fit:cover}
+  .ph-act{flex:1;min-width:0}
+  .ph-btn{display:inline-block;margin:0;cursor:pointer;color:#fff;font-size:13px}
+  .arow .em img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+  .arow .em{overflow:hidden}
   .thumb{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;font-size:34px;flex-shrink:0;background:var(--sand)}
   .info{flex:1;min-width:0}
   .info h4{font-size:15px;font-weight:700;line-height:1.3}
@@ -287,7 +306,7 @@ const T = {
     kat:{ biasa:['Menu Biasa','Menu Biasa','Makanan & minuman satuan, pesan sesuai selera'],
           bundling:['Bundling Package','Bundling','Paket hemat untuk berdua atau rombongan'],
           catering:['Family Catering','Family','Paket makan keluarga & grup besar'] },
-    groups:{},
+    groups:{}, other:'Lainnya', zoomClose:'Tutup foto',
     greet:h => (h>=4&&h<11)?'pagi':(h>=11&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam',
     msg:(g,nama,lines,jam) => `Hallo selamat ${g}, saya dengan ${nama}, saya sedang menginap di Gili Amor, saya memesan:\n${lines}\n\ndan akan datang jam ${jam}`,
     phName:'(nama tamu)', phTime:'(jam kedatangan)', locale:'id-ID'
@@ -309,7 +328,7 @@ const T = {
     kat:{ biasa:['Regular Menu','Regular','À la carte food & drinks'],
           bundling:['Bundling Package','Bundles','Value packages for two or for groups'],
           catering:['Family Catering','Family','Family meals & large groups'] },
-    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' },
+    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' }, other:'Others', zoomClose:'Close photo',
     greet:h => (h>=4&&h<12)?'good morning':(h>=12&&h<18)?'good afternoon':'good evening',
     msg:(g,nama,lines,jam) => `Hello, ${g}. My name is ${nama} and I am staying at Gili Amor. I would like to order:\n${lines}\n\nI will arrive at ${jam}`,
     phName:'(guest name)', phTime:'(arrival time)', locale:'en-GB'
@@ -345,6 +364,8 @@ const disc = h => (Number(h)||0) * (100 - (Number(CFG.promo.diskon)||0)) / 100;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const color = c => /^#[0-9a-f]{6}$/i.test(c||'') ? c : '#0f6b6b';
 const digits = s => String(s||'').replace(/\D/g,'');
+const safeUrl = u => /^https:\/\/[^\s"'<>]+$/.test(u||'') ? u : '';
+const GROUP_IC = { 'Makanan':'🍛', 'Minuman':'🥤', 'Dessert':'🍨', 'Snack':'🍟' };
 const waNum = s => { const d = digits(s); return d.startsWith('0') ? '62' + d.slice(1) : d; };
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random()*16|0; return (c === 'x' ? r : (r&3|8)).toString(16); }));
 const fmtDate = d => { try { return new Date(d+'T12:00:00+08:00').toLocaleDateString(L().locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Makassar'}); } catch(e){ return d; } };
@@ -378,6 +399,7 @@ function normalize(d){
         if (i.n_en) it.n_en = String(i.n_en);
         if (i.d_en) it.d_en = String(i.d_en);
         if (i.off) it.off = true;
+        if (safeUrl(i.f)) it.f = i.f;
         if (Array.isArray(i.v) && i.v.length) it.v = i.v.map(v => { const o = {n:String(v.n||''), h:Math.max(0, Number(v.h)||0)}; if (v.n_en) o.n_en = String(v.n_en); return o; });
         else it.h = Math.max(0, Number(i.h)||0);
         return it;
@@ -405,6 +427,7 @@ function buildMessage(key){
   const jam = state.jam ? state.jam.replace(':', '.') : t.phTime;
   return t.msg(t.greet(new Date().getHours()), nama, lines, jam);
 }
+
 
 /* ---------- SUPABASE ---------- */
 const CONF = window.AMOR_CONFIG || {};
@@ -435,6 +458,7 @@ async function loadFromSupabase(){
     if (x.nama_en) o.n_en = x.nama_en;
     if (x.deskripsi_en) o.d_en = x.deskripsi_en;
     if (!x.tersedia) o.off = true;
+    if (x.foto_url) o.f = x.foto_url;
     if (vars[x.id] && vars[x.id].length) o.v = vars[x.id]; else o.h = x.harga || 0;
     R.menu[x.kategori].push(o);
   });
@@ -451,6 +475,7 @@ function render(){
     <button class="adminlink" data-retry>${LANG==='en'?'Try again':'Coba lagi'}</button></div>`; bind(); return; }
   app.innerHTML = (state.resto ? restoView() : homeView()) + (SB_READY ? '' : `<div class="demo">Mode demo · config.js belum diisi</div>`);
   if (state.sheet) app.insertAdjacentHTML('beforeend', sheetView());
+  if (state.zoom) app.insertAdjacentHTML('beforeend', zoomView());
   bind();
 }
 function homeView(){
@@ -500,12 +525,18 @@ function qtyCtrl(k, q){
       <button class="qbtn plus" data-plus="${esc(k)}" aria-label="Tambah">+</button>
     </div>` : `<button class="add" data-plus="${esc(k)}">${L().pick}</button>`;
 }
+function thumbHTML(i){
+  const u = safeUrl(i.f);
+  return u ? `<button class="photo" data-zoom="${esc(u)}" aria-label="${esc(tr(i,'n'))}"><img src="${esc(u)}" alt="${esc(tr(i,'n'))}" loading="lazy"></button>`
+           : `<div class="thumb">${esc(i.e)}</div>`;
+}
 function itemCard(i, c){
+  const ph = safeUrl(i.f) ? ' has-photo' : '';
   if (i.v) {
     const any = i.v.some((_, x) => c[i.id+'|'+x]);
     const min = Math.min(...i.v.map(v => v.h));
-    return `<div class="item ${any?'sel':''}">
-      <div class="thumb">${esc(i.e)}</div>
+    return `<div class="item${ph} ${any?'sel':''}">
+      ${thumbHTML(i)}
       <div class="info">
         <h4>${esc(tr(i,'n'))}</h4><p>${esc(tr(i,'d'))}</p>
         <div class="vlabel">${L().pickVar} ${rp(disc(min))}</div>
@@ -517,14 +548,20 @@ function itemCard(i, c){
       </div></div>`;
   }
   const q = c[i.id]||0;
-  return `<div class="item ${q?'sel':''}">
-    <div class="thumb">${esc(i.e)}</div>
+  return `<div class="item${ph} ${q?'sel':''}">
+    ${thumbHTML(i)}
     <div class="info">
       <h4>${esc(tr(i,'n'))}</h4><p>${esc(tr(i,'d'))}</p>
       <div class="price-row">
         <div><div class="old">${rp(i.h)}</div><div class="new">${rp(disc(i.h))}</div></div>
         ${qtyCtrl(i.id, q)}
       </div></div></div>`;
+}
+function groupsOf(items){ const g = []; items.forEach(i => { const k = i.g || ''; if (!g.includes(k)) g.push(k); }); return g; }
+function subTabs(groups){
+  if (groups.length < 2) return '';
+  return `<div class="subtabs" role="tablist">${groups.map(g => `<button role="tab" class="sub ${state.sub===g?'on':''}" data-sub="${esc(g)}">
+    <span>${GROUP_IC[g] || '🍽️'}</span>${esc(g ? (L().groups[g] || g) : L().other)}</button>`).join('')}</div>`;
 }
 function itemsHTML(items, c){
   if (!items.length) return `<div class="empty">${L().empty}</div>`;
@@ -550,13 +587,22 @@ function restoView(){
     </div>
     <div class="list">
       ${(t => `<div class="kat-intro"><span class="kic">${t.ic}</span><div><b>${t.label}</b><small>${t.desc}</small></div></div>`)(KAT.find(t => t.k === state.tab))}
-      ${itemsHTML(visible(key, state.tab), c)}</div>
+      ${(() => {
+        const items = visible(key, state.tab), groups = groupsOf(items);
+        if (groups.length < 2) return itemsHTML(items, c);
+        if (!groups.includes(state.sub)) state.sub = groups[0];
+        return subTabs(groups) + items.filter(i => (i.g || '') === state.sub).map(i => itemCard(i, c)).join('');
+      })()}</div>
     ${count ? `<div class="cartbar">
       <div><div class="ct">${count} ${L().itemsSel}</div><div class="tt">${rp(total)}</div></div>
       <button data-open>${L().next}</button></div>` : ''}
   </div>`;
 }
 
+function zoomView(){
+  return `<div class="zoom" data-unzoom role="dialog" aria-label="${L().zoomClose}">
+    <img src="${esc(safeUrl(state.zoom))}" alt=""><button class="x zx" aria-label="${L().zoomClose}">✕</button></div>`;
+}
 function waHref(key){
   const ok = state.nama.trim() && state.jam && cartLines(key).length;
   return ok ? `https://wa.me/${waNum(CFG.resto[key].wa)}?text=${encodeURIComponent(buildMessage(key))}` : '';
@@ -591,6 +637,7 @@ function sheetView(){
 }
 
 
+
 /* ---------- EVENTS ---------- */
 function on(sel, fn){ document.querySelectorAll(sel).forEach(el => el.onclick = e => fn(el, e)); }
 function bind(){
@@ -598,6 +645,9 @@ function bind(){
   on('[data-lang]', b => setLang(b.dataset.lang));
   on('[data-home]', () => { location.hash = ''; });
   on('[data-retry]', () => load());
+  on('[data-sub]', b => { state.sub = b.dataset.sub; render(); });
+  on('[data-zoom]', b => { state.zoom = b.dataset.zoom; render(); });
+  on('[data-unzoom]', () => { state.zoom = null; render(); });
   on('[data-tab]', b => { state.tab = b.dataset.tab; try { history.replaceState(null, '', '#' + state.resto + '-' + state.tab); } catch(e){} render(); });
   on('[data-plus]', b => { const c = cart(state.resto); c[b.dataset.plus] = (c[b.dataset.plus]||0)+1; render(); });
   on('[data-minus]', b => { const c = cart(state.resto); c[b.dataset.minus] = Math.max(0,(c[b.dataset.minus]||0)-1); render(); });
