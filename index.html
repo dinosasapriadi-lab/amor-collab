@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gili Amor × Junos × Manna – Special Offer</title>
+<meta name="description" content="Special offer for Gili Amor Boutique Resort guests at Junos & Manna.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#f6efe4; --cream:#fffaf2; --ink:#2b2420; --muted:#7a6d62;
+    --sea:#0f6b6b; --coral:#e2673f; --line:#e7dccb; --danger:#b3261e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--sand);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:110px}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:700;letter-spacing:-.01em}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,var(--sea) 0%,#134e4a 60%,#2b3a33 100%);color:#fff;padding:34px 22px 30px;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.05;margin:10px 0 12px}
+  .hero h1 span{color:#ffd9b8}
+  .hero p{font-size:15px;opacity:.9;line-height:1.5;max-width:380px}
+  .badge{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:var(--coral);color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;font-size:15px;box-shadow:0 6px 18px rgba(226,103,63,.35)}
+  .badge b{font-size:22px;font-family:'Fraunces',serif}
+  .period{margin-top:12px;font-size:13px;opacity:.85}
+
+  .section{padding:26px 20px 6px}
+  .section h2{font-size:22px;margin-bottom:4px}
+  .section .sub{color:var(--muted);font-size:14px;margin-bottom:16px}
+
+  .resto-card{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px;transition:transform .15s, box-shadow .15s}
+  .resto-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(43,36,32,.08)}
+  .resto-logo{width:66px;height:66px;border-radius:18px;display:grid;place-items:center;font-size:32px;flex-shrink:0;color:#fff}
+  .resto-card h3{font-size:20px}
+  .resto-card .meta{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .chev{margin-left:auto;font-size:22px;color:var(--muted)}
+  .resto-block{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:16px}
+  .rb-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .rb-head .resto-logo{width:56px;height:56px;font-size:28px;border-radius:16px}
+  .rb-head h3{font-size:21px}
+  .rb-head .meta{font-size:13px;color:var(--muted);margin-top:2px}
+  .kat-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;margin-top:8px;border-radius:16px;background:color-mix(in srgb,var(--accent) 7%,#fff);border:1px solid color-mix(in srgb,var(--accent) 22%,#fff);transition:transform .12s}
+  .kat-btn:hover{transform:translateX(3px)}
+  .kat-btn:disabled{opacity:.5;cursor:default;transform:none}
+  .kic{width:42px;height:42px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+  .ktx{flex:1;min-width:0}
+  .ktx b{display:block;font-size:15px;color:var(--accent)}
+  .ktx small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .kn{font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+  .kat-btn .chev{margin-left:0;font-size:20px}
+  .kat-intro{display:flex;gap:12px;align-items:center;padding:14px;border-radius:16px;background:color-mix(in srgb,var(--accent) 8%,#fff);margin-bottom:14px}
+  .kat-intro .kic{background:#fff}
+  .kat-intro b{display:block;font-size:16px}
+  .kat-intro small{font-size:12.5px;color:var(--muted)}
+
+  .howto{display:grid;gap:10px;margin-top:12px}
+  .step{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.45;color:#4a3f37}
+  .step i{font-style:normal;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--sea)}
+  .ended{margin:20px;padding:18px;border-radius:16px;background:#fde8e1;color:#7a2e18;font-weight:600;text-align:center}
+  footer{text-align:center;font-size:12px;color:var(--muted);padding:26px 20px 10px}
+  .adminlink{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink)}
+
+  /* RESTO VIEW */
+  .topbar{position:sticky;top:0;z-index:5;background:var(--cream);border-bottom:1px solid var(--line)}
+  .topbar-row{display:flex;align-items:center;gap:12px;padding:14px 16px}
+  .back{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:18px;display:grid;place-items:center;flex-shrink:0}
+  .topbar h2{font-size:21px}
+  .topbar .mini{font-size:12px;color:var(--coral);font-weight:700}
+  .tabs{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;padding:9px 12px;font-size:13.5px !important;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:#5a4d43}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .list{padding:14px 16px}
+  .empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:14px}
+  .ghead{font-family:'Fraunces',serif;font-weight:700;font-size:18px;margin:10px 4px 10px}
+  .ghead:first-child{margin-top:2px}
+  .item{display:flex;gap:14px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
+  .item.sel{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .thumb{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;font-size:34px;flex-shrink:0;background:var(--sand)}
+  .info{flex:1;min-width:0}
+  .info h4{font-size:15px;font-weight:700;line-height:1.3}
+  .info p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .price-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:8px;gap:8px}
+  .old{font-size:12px;color:#a99a8c;text-decoration:line-through}
+  .new{font-size:15px;font-weight:700}
+  .qty{display:flex;align-items:center;gap:6px}
+  .qbtn{width:32px;height:32px;border-radius:50%;font-size:18px;font-weight:700;display:grid;place-items:center;background:var(--sand);color:var(--ink)}
+  .qbtn.plus{background:var(--accent);color:#fff}
+  .qnum{min-width:20px;text-align:center;font-weight:700}
+  .add{padding:8px 16px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;font-size:13px}
+  .vlabel{font-size:11.5px;font-weight:700;color:var(--accent);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+  .vrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-top:1px dashed var(--line)}
+  .vrow.on .vname{color:var(--accent)}
+  .vname{font-size:13.5px;font-weight:600;line-height:1.3}
+  .vname span{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+  .vname s{color:#b5a797}
+  .vrow .add{padding:6px 13px;font-size:12px}
+  .vrow .qbtn{width:28px;height:28px;font-size:16px}
+
+  .cartbar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:calc(100% - 32px);max-width:528px;background:var(--ink);color:#fff;border-radius:18px;padding:12px 14px 12px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 30px rgba(0,0,0,.25);z-index:10}
+  .cartbar .ct{font-size:12px;opacity:.75}
+  .cartbar .tt{font-weight:700;font-size:16px}
+  .cartbar button{margin-left:auto;background:var(--coral);color:#fff;font-weight:700;padding:12px 18px;border-radius:14px}
+
+  /* SHEET */
+  .overlay{position:fixed;inset:0;background:rgba(30,24,20,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+  .sheet{background:var(--cream);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:22px 20px 26px;animation:up .25s ease}
+  @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .sheet-head h3{font-size:22px}
+  .x{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:16px}
+  .sum-line{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .sum-total{display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:var(--muted)}
+  .sum-total.big{color:var(--ink);font-weight:700;font-size:17px}
+  .disc{color:var(--coral)}
+  label{display:block;font-size:13px;font-weight:600;margin:16px 0 6px;color:#4a3f37}
+  input,select,textarea{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent,var(--sea))}
+  textarea{resize:vertical;min-height:70px}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45}
+  .preview{margin-top:18px;background:#e7f6e9;border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.55;white-space:pre-wrap;color:#1f3b25}
+  .plabel{margin-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#3f7a4c}
+  .preview{margin-top:6px !important}
+  .hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+  .lang{display:inline-flex;border-radius:999px;padding:3px;background:rgba(255,255,255,.16);flex-shrink:0}
+  .lang button{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;opacity:.8}
+  .lang button.on{background:#fff;color:var(--sea);opacity:1}
+  .lang.dark{background:var(--sand)}
+  .lang.dark button{color:var(--muted)}
+  .lang.dark button.on{background:var(--ink);color:#fff}
+  .wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:18px;padding:15px;border-radius:16px;background:#25d366;color:#fff;font-weight:700;font-size:16px;text-decoration:none}
+  .wa.disabled{background:#b9c9bd;pointer-events:none}
+  .err{color:var(--danger);font-size:12.5px;margin-top:8px;text-align:center}
+
+  /* ADMIN */
+  .adm{--accent:var(--sea)}
+  .adm .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 16px 14px}
+  .adm .card h3{font-size:18px;margin-bottom:2px}
+  .adm .card > .hint{margin-top:2px}
+  .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .row2 > div{min-width:0}
+  input[type=date]{min-width:0;font-size:15px;padding:12px 10px}
+  .row2 label{margin-top:12px}
+  .rtabs{display:flex;gap:8px;padding:4px 16px 14px}
+  .rtab{flex:1;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:700}
+  .rtab.active{color:#fff}
+  .ktitle{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+  .ktitle:first-of-type{margin-top:6px}
+  .ktitle h4{font-size:15px}
+  .mini-btn{padding:7px 12px;border-radius:999px;background:var(--sea);color:#fff;font-size:12.5px;font-weight:700}
+  .arow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 0;border-top:1px dashed var(--line)}
+  .arow .em{width:40px;height:40px;border-radius:12px;background:var(--sand);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+  .arow .tx{flex:1;min-width:0}
+  .arow .nm{font-weight:700;font-size:14px;line-height:1.3}
+  .arow .pr{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:#eee4d6;color:#6d5640;margin-left:4px;vertical-align:1px}
+  .tag.off{background:#fde1dc;color:var(--danger)}
+  .icons,.confirm{width:100%;justify-content:flex-end}
+  .icons{display:flex;gap:6px}
+  .ib{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px;display:grid;place-items:center}
+  .ib:disabled{opacity:.3;cursor:default}
+  .ib.del{color:var(--danger)}
+  .confirm{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;color:var(--danger)}
+  .confirm button{padding:6px 10px;border-radius:10px;font-weight:700;font-size:12px}
+  .confirm .yes{background:var(--danger);color:#fff}
+  .confirm .no{border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .savebar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:calc(100% - 32px);max-width:528px;background:var(--ink);color:#fff;border-radius:18px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 14px 30px rgba(0,0,0,.25);z-index:10;font-size:13px}
+  .savebar .msg{flex:1;line-height:1.35}
+  .savebar .cancel{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.3)}
+  .savebar .save{padding:11px 16px;border-radius:12px;background:#25b26a;color:#fff;font-weight:700}
+  .savebar .save:disabled{opacity:.5}
+  .status{margin:0 16px 14px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.45}
+  .status.ok{background:#e3f4e8;color:#1f5a33}
+  .status.warn{background:#fff4e6;color:#6d5640;border:1px dashed #e8c79e}
+  .status.bad{background:#fde8e1;color:#7a2e18}
+  .vedit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 36px;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .vedit .vh{grid-column:1 / span 2}
+  .vedit .ib{grid-row:span 2;height:auto}
+  .en-box{margin-top:16px;padding:4px 14px 14px;border-radius:14px;background:#f2f6f9;border:1px solid #dde7ee}
+  .en-title{font-size:13px;font-weight:700;margin-top:10px}
+  .en-title span{font-weight:500;color:var(--muted);font-size:12px}
+  .vedit input{padding:10px 12px;font-size:15px}
+  .switch{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:14px;font-weight:600}
+  .switch input{width:20px;height:20px;accent-color:var(--sea)}
+  .btn{display:block;width:100%;padding:14px;border-radius:14px;font-weight:700;font-size:15px;margin-top:18px;background:var(--sea);color:#fff}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:10px}
+  .linkish{color:var(--sea);font-weight:700;font-size:13px;margin-top:10px}
+  .gate{padding:60px 24px;text-align:center;color:var(--muted)}
+  .gate h2{color:var(--ink);margin-bottom:8px}
+
+  .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--sea);margin:0 auto 14px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .demo{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#fff4e6;border:1px dashed #e8c79e;color:#6d5640;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;z-index:30}
+  .login{max-width:380px;margin:0 auto;padding:60px 22px 30px}
+  .login h2{text-align:center;font-size:26px;margin-bottom:6px}
+  .login .resto-logo{width:60px;height:60px;font-size:28px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const DEFAULT = {
+  promo: { diskon: 15, mulai: '2026-11-01', selesai: '2026-12-15' },
+  order: ['junos', 'manna'],
+  resto: {
+    junos: {
+      nama: 'Junos', wa: '6281200000001', warna: '#0f6b6b', logo: '🌴',
+      info: 'Contoh: buka 08.00–22.00 · ±3 menit jalan kaki',
+      menu: {
+        biasa: [
+          {id:'j1', g:'Makanan', n:'Nasi Goreng', d:'Telur mata sapi, kerupuk, acar', e:'🍳',
+            v:[{n:'Ayam', h:50000},{n:'Seafood', h:65000},{n:'Kampung', h:45000}]},
+          {id:'j2', g:'Makanan', n:'Mie Goreng Jawa', d:'Mie kuning, ayam, sayur, acar', h:55000, e:'🍜'},
+          {id:'j3', g:'Makanan', n:'Grilled Fish Sambal Matah', d:'Ikan bakar segar, nasi, sambal matah', e:'🐟',
+            v:[{n:'Tidak pedas', h:95000},{n:'Pedas sedang', h:95000},{n:'Extra pedas', h:95000}]},
+          {id:'j5', g:'Makanan', n:'Gado-Gado', d:'Sayur rebus, tahu, tempe, saus kacang', h:45000, e:'🥗'},
+          {id:'j4', g:'Minuman', n:'Es Kelapa Muda', d:'Kelapa muda utuh', h:30000, e:'🥥'},
+          {id:'j6', g:'Minuman', n:'Kopi Lombok', d:'Kopi robusta lokal', e:'☕',
+            v:[{n:'Panas', h:25000},{n:'Dingin', h:28000},{n:'Susu dingin', h:32000}]},
+          {id:'j7', g:'Minuman', n:'Smoothie', d:'Buah segar + yoghurt', e:'🥤',
+            v:[{n:'Mangga', h:40000},{n:'Berry', h:45000},{n:'Pisang', h:38000}]}
+        ],
+        bundling: [
+          {id:'jb1', n:'Couple Dinner Package', d:'2 main course, 2 minuman, 1 dessert', h:250000, e:'💑'},
+          {id:'jb2', n:'Sunset Snack Package', d:'Platter gorengan, 2 mocktail', h:150000, e:'🌅'}
+        ],
+        catering: [
+          {id:'jc1', n:'Family Catering 4 Pax', d:'Nasi, 3 lauk, sayur, buah, es teh', h:450000, e:'🍱'},
+          {id:'jc2', n:'Family Catering 8 Pax', d:'Nasi, 4 lauk, sayur, buah, es teh', h:850000, e:'🍲'}
+        ]
+      }
+    },
+    manna: {
+      nama: 'Manna', wa: '6281200000002', warna: '#a3492b', logo: '🍽️',
+      info: 'Contoh: buka 10.00–23.00 · ±5 menit jalan kaki',
+      menu: {
+        biasa: [
+          {id:'m1', g:'Makanan', n:'Ayam Taliwang', d:'Ayam bakar khas Lombok, plecing kangkung', e:'🍗',
+            v:[{n:'Tidak pedas', h:75000},{n:'Pedas', h:75000},{n:'Extra pedas', h:75000}]},
+          {id:'m2', g:'Makanan', n:'Beef Burger', d:'Daging sapi, keju, kentang goreng', h:85000, e:'🍔'},
+          {id:'m3', g:'Makanan', n:'Pasta', d:'Pasta dengan pilihan saus', e:'🍝',
+            v:[{n:'Carbonara', h:80000},{n:'Bolognese', h:78000},{n:'Aglio Olio', h:70000}]},
+          {id:'m5', g:'Makanan', n:'Sate Rembiga', d:'Sate sapi bumbu pedas manis, lontong', h:70000, e:'🍢'},
+          {id:'m4', g:'Minuman', n:'Fresh Juice', d:'Buah segar tanpa pengawet', e:'🧃',
+            v:[{n:'Mangga', h:35000},{n:'Semangka', h:30000},{n:'Nanas', h:30000}]},
+          {id:'m6', g:'Minuman', n:'Teh', d:'Teh melati', e:'🍵',
+            v:[{n:'Panas', h:15000},{n:'Es', h:18000},{n:'Lemon tea dingin', h:25000}]},
+          {id:'m7', g:'Minuman', n:'Mocktail', d:'Segar untuk sore hari', h:45000, e:'🍹'}
+        ],
+        bundling: [
+          {id:'mb1', n:'Lombok Taste Package', d:'Ayam taliwang, sate rembiga, 2 minuman', h:220000, e:'🔥'},
+          {id:'mb2', n:'Western Duo Package', d:'2 burger/pasta, 2 juice', h:260000, e:'🍕'}
+        ],
+        catering: [
+          {id:'mc1', n:'Family Catering 4 Pax', d:'Nasi, ayam taliwang, plecing, buah', h:480000, e:'🍱'},
+          {id:'mc2', n:'Family Catering 10 Pax', d:'Prasmanan lengkap + dessert', h:1150000, e:'🥘'}
+        ]
+      }
+    }
+  }
+};
+
+/* ---------- BAHASA / LANGUAGE ---------- */
+const T = {
+  id: {
+    eyebrow:'Brand Collaboration',
+    heroP:'Special offer khusus tamu Gili Amor Boutique Resort. Pilih menu, kirim pesanan lewat WhatsApp, lalu datang dan tunjukkan kunci kamar Anda.',
+    badge:'OFF dengan kunci kamar', valid:'Berlaku', ended:'Promo telah berakhir. Terima kasih atas kunjungan Anda!',
+    pickTitle:'Pilih Restoran', pickSub:'Pilih restoran dan jenis menu yang Anda inginkan',
+    soon:'Segera hadir', nMenu:'menu',
+    howTitle:'Cara Pesan',
+    steps:['Pilih restoran, lalu tekan menu yang Anda inginkan.','Isi nama dan jam kedatangan.','Tekan <b>Kirim via WhatsApp</b>, pesan otomatis tersusun.','Datang sesuai jam, tunjukkan kunci kamar, nikmati diskon {d}%.'],
+    offFor:'OFF untuk tamu Gili Amor', empty:'Belum ada menu di kategori ini.',
+    pickVar:'Pilih varian · mulai', pick:'Pilih', itemsSel:'item dipilih', next:'Lanjut →',
+    orderAt:'Pesanan di', subtotal:'Subtotal', discount:'Diskon Amor Collab', total:'Estimasi total',
+    name:'Nama tamu', namePh:'Contoh: Sarah', time:'Jam kedatangan', keyHint:'Jangan lupa bawa kunci kamar untuk mendapatkan diskon.',
+    preview:'Pratinjau pesan WhatsApp', send:'Kirim via WhatsApp', needInfo:'Isi nama dan jam kedatangan untuk melanjutkan.',
+    back:'Kembali', close:'Tutup', admin:'⚙️ Kelola Menu (Admin)',
+    kat:{ biasa:['Menu Biasa','Menu Biasa','Makanan & minuman satuan, pesan sesuai selera'],
+          bundling:['Bundling Package','Bundling','Paket hemat untuk berdua atau rombongan'],
+          catering:['Family Catering','Family','Paket makan keluarga & grup besar'] },
+    groups:{},
+    greet:h => (h>=4&&h<11)?'pagi':(h>=11&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam',
+    msg:(g,nama,lines,jam) => `Hallo selamat ${g}, saya dengan ${nama}, saya sedang menginap di Gili Amor, saya memesan:\n${lines}\n\ndan akan datang jam ${jam}`,
+    phName:'(nama tamu)', phTime:'(jam kedatangan)', locale:'id-ID'
+  },
+  en: {
+    eyebrow:'Brand Collaboration',
+    heroP:'An exclusive offer for Gili Amor Boutique Resort guests. Choose your dishes, send your order via WhatsApp, then simply show your room key when you arrive.',
+    badge:'OFF with your room key', valid:'Valid', ended:'This promotion has ended. Thank you for visiting!',
+    pickTitle:'Choose a Restaurant', pickSub:'Pick a restaurant and the type of menu you like',
+    soon:'Coming soon', nMenu:'items',
+    howTitle:'How to Order',
+    steps:['Choose a restaurant, then tap the dishes you want.','Enter your name and arrival time.','Tap <b>Send via WhatsApp</b>, your order message is written for you.','Arrive on time, show your room key and enjoy {d}% off.'],
+    offFor:'OFF for Gili Amor guests', empty:'No items in this category yet.',
+    pickVar:'Choose an option · from', pick:'Add', itemsSel:'items selected', next:'Continue →',
+    orderAt:'Your order at', subtotal:'Subtotal', discount:'Amor Collab discount', total:'Estimated total',
+    name:'Guest name', namePh:'e.g. Sarah', time:'Arrival time', keyHint:'Remember to bring your room key to get the discount.',
+    preview:'WhatsApp message preview', send:'Send via WhatsApp', needInfo:'Enter your name and arrival time to continue.',
+    back:'Back', close:'Close', admin:'⚙️ Manage Menu (Admin)',
+    kat:{ biasa:['Regular Menu','Regular','À la carte food & drinks'],
+          bundling:['Bundling Package','Bundles','Value packages for two or for groups'],
+          catering:['Family Catering','Family','Family meals & large groups'] },
+    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' },
+    greet:h => (h>=4&&h<12)?'good morning':(h>=12&&h<18)?'good afternoon':'good evening',
+    msg:(g,nama,lines,jam) => `Hello, ${g}. My name is ${nama} and I am staying at Gili Amor. I would like to order:\n${lines}\n\nI will arrive at ${jam}`,
+    phName:'(guest name)', phTime:'(arrival time)', locale:'en-GB'
+  }
+};
+let LANG = (() => { try { const v = localStorage.getItem('amor_lang'); if (v === 'id' || v === 'en') return v; } catch(e){}
+  return (navigator.language || 'id').toLowerCase().startsWith('id') ? 'id' : 'en'; })();
+const L = () => T[LANG];
+function setLang(l){ LANG = l; try { localStorage.setItem('amor_lang', l); } catch(e){} render(); }
+const tr = (o, f) => (LANG === 'en' && o[f + '_en']) ? o[f + '_en'] : o[f];
+const langBtn = (dark) => `<div class="lang ${dark?'dark':''}" role="group" aria-label="Language">
+  <button data-lang="id" class="${LANG==='id'?'on':''}">ID</button><button data-lang="en" class="${LANG==='en'?'on':''}">EN</button></div>`;
+
+const KAT = [
+  {k:'biasa', ic:'🍽️'}, {k:'bundling', ic:'🎁'}, {k:'catering', ic:'👨‍👩‍👧‍👦'}
+].map(t => Object.assign(t, {
+  get label(){ return L().kat[t.k][0]; }, get short(){ return L().kat[t.k][1]; }, get desc(){ return L().kat[t.k][2]; },
+  get adminLabel(){ return T.id.kat[t.k][0]; } }));
+
+/* ---------- STATE ---------- */
+const clone = o => JSON.parse(JSON.stringify(o));
+let CFG = clone(DEFAULT);
+const state = {
+  view:'home', resto:null, tab:'biasa', carts:{}, sheet:false, nama:'', jam:'',
+  // admin
+  loading:true, loadError:false, isAdmin:false, db:null, dbStatus:'none', draft:null, dirty:false, saving:false, saveMsg:'',
+  aResto:'junos', edit:null, confirmDel:null, pendingRender:false
+};
+
+/* ---------- HELPERS ---------- */
+const rp = n => 'Rp ' + Math.round(Number(n)||0).toLocaleString('id-ID');
+const disc = h => (Number(h)||0) * (100 - (Number(CFG.promo.diskon)||0)) / 100;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const color = c => /^#[0-9a-f]{6}$/i.test(c||'') ? c : '#0f6b6b';
+const digits = s => String(s||'').replace(/\D/g,'');
+const waNum = s => { const d = digits(s); return d.startsWith('0') ? '62' + d.slice(1) : d; };
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random()*16|0; return (c === 'x' ? r : (r&3|8)).toString(16); }));
+const fmtDate = d => { try { return new Date(d+'T12:00:00+08:00').toLocaleDateString(L().locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Makassar'}); } catch(e){ return d; } };
+
+function promoStatus(){
+  const now = Date.now();
+  const a = Date.parse(CFG.promo.mulai + 'T00:00:00+08:00');
+  const b = Date.parse(CFG.promo.selesai + 'T23:59:59+08:00');
+  if (now < a) return 'soon';
+  if (now > b) return 'ended';
+  return 'on';
+}
+/* Data dari penyimpanan dianggap tidak tepercaya: rapikan bentuknya */
+function normalize(d){
+  if (!d || typeof d !== 'object' || !d.resto || !d.promo) return null;
+  const out = { promo:{
+      diskon: Math.min(100, Math.max(0, Number(d.promo.diskon)||0)),
+      mulai: /^\d{4}-\d{2}-\d{2}$/.test(d.promo.mulai) ? d.promo.mulai : DEFAULT.promo.mulai,
+      selesai: /^\d{4}-\d{2}-\d{2}$/.test(d.promo.selesai) ? d.promo.selesai : DEFAULT.promo.selesai },
+    order: Array.isArray(d.order) ? d.order.filter(k => d.resto[k]) : Object.keys(d.resto),
+    resto:{} };
+  for (const k of out.order){
+    const r = d.resto[k] || {};
+    const m = r.menu || {};
+    out.resto[k] = { nama:String(r.nama||k), wa:waNum(r.wa), warna:color(r.warna), logo:String(r.logo||'🍽️'),
+      info:String(r.info||''), info_en:String(r.info_en||''), menu:{} };
+    for (const {k:kk} of KAT){
+      out.resto[k].menu[kk] = (Array.isArray(m[kk]) ? m[kk] : []).map(i => {
+        const it = { id:String(i.id||uid()), n:String(i.n||'Menu'), d:String(i.d||''), e:String(i.e||'🍽️') };
+        if (i.g) it.g = String(i.g);
+        if (i.n_en) it.n_en = String(i.n_en);
+        if (i.d_en) it.d_en = String(i.d_en);
+        if (i.off) it.off = true;
+        if (Array.isArray(i.v) && i.v.length) it.v = i.v.map(v => { const o = {n:String(v.n||''), h:Math.max(0, Number(v.h)||0)}; if (v.n_en) o.n_en = String(v.n_en); return o; });
+        else it.h = Math.max(0, Number(i.h)||0);
+        return it;
+      });
+    }
+  }
+  return out.order.length ? out : null;
+}
+
+/* ---------- KERANJANG ---------- */
+function cart(key){ return state.carts[key] || (state.carts[key] = {}); }
+function visible(key, kat){ return (CFG.resto[key].menu[kat] || []).filter(i => !i.off); }
+function cartLines(key){
+  const c = cart(key), out = [];
+  KAT.forEach(({k}) => visible(key, k).forEach(i => {
+    if (i.v) i.v.forEach((v, x) => { const q = c[i.id+'|'+x]||0; if (q) out.push({n:`${i.n} (${v.n})`, h:v.h, q}); });
+    else if (c[i.id] > 0) out.push({n:i.n, h:i.h, q:c[i.id]});
+  }));
+  return out;
+}
+function buildMessage(key){
+  const t = L();
+  const lines = cartLines(key).map(i => `- ${i.q}x ${i.n}`).join('\n');
+  const nama = state.nama.trim() || t.phName;
+  const jam = state.jam ? state.jam.replace(':', '.') : t.phTime;
+  return t.msg(t.greet(new Date().getHours()), nama, lines, jam);
+}
+
+/* ---------- SUPABASE ---------- */
+const CONF = window.AMOR_CONFIG || {};
+const SB_READY = !!(CONF.SUPABASE_URL && CONF.SUPABASE_ANON_KEY && !/XXXX/.test(CONF.SUPABASE_URL) && window.supabase);
+const sb = SB_READY ? window.supabase.createClient(CONF.SUPABASE_URL, CONF.SUPABASE_ANON_KEY) : null;
+const chk = async q => { const r = await q; if (r.error) throw r.error; return r.data; };
+
+async function loadFromSupabase(){
+  const [s, r, m, v] = await Promise.all([
+    chk(sb.from('settings').select('*').eq('id', 1).maybeSingle()),
+    chk(sb.from('restaurants').select('*').order('urutan')),
+    chk(sb.from('menu_items').select('*').order('urutan')),
+    chk(sb.from('menu_variants').select('*').order('urutan'))
+  ]);
+  const cfg = { promo:{ diskon: s ? s.diskon : 15, mulai: s ? s.mulai : DEFAULT.promo.mulai, selesai: s ? s.selesai : DEFAULT.promo.selesai },
+                order:[], resto:{} };
+  (r || []).forEach(x => {
+    cfg.order.push(x.id);
+    cfg.resto[x.id] = { nama:x.nama, wa:x.wa, warna:x.warna, logo:x.logo, info:x.info, info_en:x.info_en,
+                        menu:{ biasa:[], bundling:[], catering:[] } };
+  });
+  const vars = {};
+  (v || []).forEach(x => (vars[x.item_id] = vars[x.item_id] || []).push({ n:x.nama, n_en:x.nama_en || undefined, h:x.harga }));
+  (m || []).forEach(x => {
+    const R = cfg.resto[x.restaurant_id]; if (!R || !R.menu[x.kategori]) return;
+    const o = { id:x.id, n:x.nama, d:x.deskripsi, e:x.emoji };
+    if (x.kelompok) o.g = x.kelompok;
+    if (x.nama_en) o.n_en = x.nama_en;
+    if (x.deskripsi_en) o.d_en = x.deskripsi_en;
+    if (!x.tersedia) o.off = true;
+    if (vars[x.id] && vars[x.id].length) o.v = vars[x.id]; else o.h = x.harga || 0;
+    R.menu[x.kategori].push(o);
+  });
+  return normalize(cfg);
+}
+
+/* ---------- RENDER ---------- */
+function render(){
+  document.documentElement.lang = LANG;
+  const app = document.getElementById('app');
+  if (state.loading) { app.innerHTML = `<div class="gate"><div class="spinner"></div><p>${LANG==='en'?'Loading menu…':'Memuat menu…'}</p></div>`; return; }
+  if (state.loadError) { app.innerHTML = `<div class="gate"><h2>${LANG==='en'?'Menu unavailable':'Menu belum bisa dimuat'}</h2>
+    <p>${LANG==='en'?'Please check your connection and try again.':'Periksa koneksi internet lalu coba lagi.'}</p>
+    <button class="adminlink" data-retry>${LANG==='en'?'Try again':'Coba lagi'}</button></div>`; bind(); return; }
+  app.innerHTML = (state.resto ? restoView() : homeView()) + (SB_READY ? '' : `<div class="demo">Mode demo · config.js belum diisi</div>`);
+  if (state.sheet) app.insertAdjacentHTML('beforeend', sheetView());
+  bind();
+}
+function homeView(){
+  const st = promoStatus();
+  const names = CFG.order.map(k => `<span>${esc(CFG.resto[k].nama)}</span>`).join(' × ');
+  return `
+  <header class="hero">
+    <div class="hero-top"><div class="eyebrow">${L().eyebrow}</div>${langBtn(false)}</div>
+    <h1>Gili Amor × ${names}</h1>
+    <p>${L().heroP}</p>
+    <div class="badge"><b>${esc(CFG.promo.diskon)}%</b> ${L().badge}</div>
+    <div class="period">${L().valid} ${esc(fmtDate(CFG.promo.mulai))} – ${esc(fmtDate(CFG.promo.selesai))}</div>
+  </header>
+  ${st === 'ended' ? `<div class="ended">${L().ended}</div>` : ''}
+  <section class="section">
+    <h2>${L().pickTitle}</h2>
+    <div class="sub">${L().pickSub}</div>
+    ${CFG.order.map(k => { const r = CFG.resto[k]; return `
+      <div class="resto-block" style="--accent:${color(r.warna)}">
+        <div class="rb-head">
+          <div class="resto-logo" style="background:${color(r.warna)}">${esc(r.logo)}</div>
+          <div><h3>${esc(r.nama)}</h3><div class="meta">${esc(tr(r,'info'))}</div></div>
+        </div>
+        ${KAT.map(t => { const n = visible(k, t.k).length; return `
+          <button class="kat-btn" data-go="${esc(k)}-${t.k}" ${n?'':'disabled'}>
+            <span class="kic">${t.ic}</span>
+            <span class="ktx"><b>${t.label}</b><small>${n ? t.desc : L().soon}</small></span>
+            <span class="kn">${n ? n + ' ' + (LANG==='en' && n===1 ? 'item' : L().nMenu) : ''}</span><span class="chev">›</span>
+          </button>`; }).join('')}
+      </div>`; }).join('')}
+  </section>
+  <section class="section">
+    <h2>${L().howTitle}</h2>
+    <div class="howto">
+      ${L().steps.map((x, n) => `<div class="step"><i>${n+1}</i><span>${x.replace('{d}', esc(CFG.promo.diskon))}</span></div>`).join('')}
+    </div>
+  </section>
+  <footer>Gili Amor Boutique Resort<br>
+    ${state.isAdmin ? `<button class="adminlink" data-goadmin>${L().admin}</button>` : ''}
+  </footer>`;
+}
+
+function qtyCtrl(k, q){
+  return q ? `<div class="qty">
+      <button class="qbtn" data-minus="${esc(k)}" aria-label="Kurangi">−</button>
+      <span class="qnum">${q}</span>
+      <button class="qbtn plus" data-plus="${esc(k)}" aria-label="Tambah">+</button>
+    </div>` : `<button class="add" data-plus="${esc(k)}">${L().pick}</button>`;
+}
+function itemCard(i, c){
+  if (i.v) {
+    const any = i.v.some((_, x) => c[i.id+'|'+x]);
+    const min = Math.min(...i.v.map(v => v.h));
+    return `<div class="item ${any?'sel':''}">
+      <div class="thumb">${esc(i.e)}</div>
+      <div class="info">
+        <h4>${esc(tr(i,'n'))}</h4><p>${esc(tr(i,'d'))}</p>
+        <div class="vlabel">${L().pickVar} ${rp(disc(min))}</div>
+        ${i.v.map((v, x) => { const k = i.id+'|'+x, q = c[k]||0; return `
+          <div class="vrow ${q?'on':''}">
+            <div class="vname">${esc(tr(v,'n'))}<span><s>${rp(v.h)}</s> ${rp(disc(v.h))}</span></div>
+            ${qtyCtrl(k, q)}
+          </div>`; }).join('')}
+      </div></div>`;
+  }
+  const q = c[i.id]||0;
+  return `<div class="item ${q?'sel':''}">
+    <div class="thumb">${esc(i.e)}</div>
+    <div class="info">
+      <h4>${esc(tr(i,'n'))}</h4><p>${esc(tr(i,'d'))}</p>
+      <div class="price-row">
+        <div><div class="old">${rp(i.h)}</div><div class="new">${rp(disc(i.h))}</div></div>
+        ${qtyCtrl(i.id, q)}
+      </div></div></div>`;
+}
+function itemsHTML(items, c){
+  if (!items.length) return `<div class="empty">${L().empty}</div>`;
+  const groups = [];
+  items.forEach(i => { const g = i.g||''; let grp = groups.find(x => x.g === g); if (!grp) groups.push(grp = {g, list:[]}); grp.list.push(i); });
+  return groups.map(grp => (grp.g ? `<div class="ghead">${esc(L().groups[grp.g] || grp.g)}</div>` : '') + grp.list.map(i => itemCard(i, c)).join('')).join('');
+}
+
+function restoView(){
+  const key = state.resto, r = CFG.resto[key], c = cart(key);
+  const lines = cartLines(key);
+  const count = lines.reduce((a,i)=>a+i.q,0);
+  const total = lines.reduce((a,i)=>a+disc(i.h)*i.q,0);
+  return `
+  <div style="--accent:${color(r.warna)}">
+    <div class="topbar">
+      <div class="topbar-row">
+        <button class="back" data-home aria-label="${L().back}">←</button>
+        <div><h2>${esc(r.nama)}</h2><div class="mini">${esc(CFG.promo.diskon)}% ${L().offFor}</div></div>
+        <div style="margin-left:auto">${langBtn(true)}</div>
+      </div>
+      <div class="tabs">${KAT.map(t => `<button class="tab ${state.tab===t.k?'active':''}" data-tab="${t.k}">${t.ic} ${t.short}</button>`).join('')}</div>
+    </div>
+    <div class="list">
+      ${(t => `<div class="kat-intro"><span class="kic">${t.ic}</span><div><b>${t.label}</b><small>${t.desc}</small></div></div>`)(KAT.find(t => t.k === state.tab))}
+      ${itemsHTML(visible(key, state.tab), c)}</div>
+    ${count ? `<div class="cartbar">
+      <div><div class="ct">${count} ${L().itemsSel}</div><div class="tt">${rp(total)}</div></div>
+      <button data-open>${L().next}</button></div>` : ''}
+  </div>`;
+}
+
+function waHref(key){
+  const ok = state.nama.trim() && state.jam && cartLines(key).length;
+  return ok ? `https://wa.me/${waNum(CFG.resto[key].wa)}?text=${encodeURIComponent(buildMessage(key))}` : '';
+}
+function sheetView(){
+  const key = state.resto, r = CFG.resto[key];
+  const lines = cartLines(key);
+  const normal = lines.reduce((a,i)=>a+i.h*i.q,0);
+  const total = lines.reduce((a,i)=>a+disc(i.h)*i.q,0);
+  const href = waHref(key);
+  return `
+  <div class="overlay" data-close-bg style="--accent:${color(r.warna)}">
+    <div class="sheet">
+      <div class="sheet-head"><h3>${L().orderAt} ${esc(r.nama)}</h3><button class="x" data-close aria-label="${L().close}">✕</button></div>
+      ${lines.map(i => `<div class="sum-line"><span>${i.q}x ${esc(i.n)}</span><span>${rp(i.h*i.q)}</span></div>`).join('')}
+      <div class="sum-total"><span>${L().subtotal}</span><span>${rp(normal)}</span></div>
+      <div class="sum-total disc"><span>${L().discount} ${esc(CFG.promo.diskon)}%</span><span>− ${rp(normal-total)}</span></div>
+      <div class="sum-total big"><span>${L().total}</span><span>${rp(total)}</span></div>
+      <label for="nama">${L().name}</label>
+      <input id="nama" type="text" placeholder="${L().namePh}" value="${esc(state.nama)}" autocomplete="name">
+      <label for="jam">${L().time}</label>
+      <input id="jam" type="time" value="${esc(state.jam)}">
+      <div class="hint">${L().keyHint}</div>
+      <div class="plabel">${L().preview}</div>
+      <div class="preview" id="preview">${esc(buildMessage(key))}</div>
+      <a class="wa ${href?'':'disabled'}" id="wa" href="${href||'#'}" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.2c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.5-4.1-.1-.2-1.1-1.5-1.1-2.8 0-1.3.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+        ${L().send}</a>
+      <div class="err" id="err">${href ? '' : L().needInfo}</div>
+    </div>
+  </div>`;
+}
+
+
+/* ---------- EVENTS ---------- */
+function on(sel, fn){ document.querySelectorAll(sel).forEach(el => el.onclick = e => fn(el, e)); }
+function bind(){
+  on('[data-go]', b => { location.hash = b.dataset.go; });
+  on('[data-lang]', b => setLang(b.dataset.lang));
+  on('[data-home]', () => { location.hash = ''; });
+  on('[data-retry]', () => load());
+  on('[data-tab]', b => { state.tab = b.dataset.tab; try { history.replaceState(null, '', '#' + state.resto + '-' + state.tab); } catch(e){} render(); });
+  on('[data-plus]', b => { const c = cart(state.resto); c[b.dataset.plus] = (c[b.dataset.plus]||0)+1; render(); });
+  on('[data-minus]', b => { const c = cart(state.resto); c[b.dataset.minus] = Math.max(0,(c[b.dataset.minus]||0)-1); render(); });
+  on('[data-open]', () => { state.sheet = true; render(); });
+  on('[data-close]', () => { state.sheet = false; render(); });
+  on('[data-close-bg]', (o, e) => { if (e.target === o) { state.sheet = false; render(); } });
+  const nama = document.getElementById('nama'), jam = document.getElementById('jam');
+  if (nama) nama.oninput = e => { state.nama = e.target.value; refreshSheet(); };
+  if (jam) jam.oninput = e => { state.jam = e.target.value; refreshSheet(); };
+}
+function refreshSheet(){
+  const key = state.resto, href = waHref(key);
+  document.getElementById('preview').textContent = buildMessage(key);
+  const wa = document.getElementById('wa');
+  wa.classList.toggle('disabled', !href); wa.href = href || '#';
+  document.getElementById('err').textContent = href ? '' : L().needInfo;
+}
+
+/* ---------- ROUTING & LOAD ---------- */
+function route(){
+  const [r, t] = location.hash.replace('#','').split('-');
+  state.sheet = false;
+  state.resto = CFG.resto[r] ? r : null;
+  state.tab = KAT.some(x => x.k === t) ? t : 'biasa';
+  window.scrollTo(0,0);
+  render();
+}
+async function load(){
+  if (!SB_READY) { state.loading = false; route(); return; }
+  state.loading = true; state.loadError = false; render();
+  try { const c = await loadFromSupabase(); if (c) CFG = c; state.loading = false; }
+  catch(e) { console.error(e); state.loading = false; state.loadError = true; }
+  route();
+}
+window.addEventListener('hashchange', route);
+load();
+
+</script>
+</body>
+</html>

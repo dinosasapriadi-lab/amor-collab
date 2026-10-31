@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Amor Collab</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand:#f6efe4; --cream:#fffaf2; --ink:#2b2420; --muted:#7a6d62;
+    --sea:#0f6b6b; --coral:#e2673f; --line:#e7dccb; --danger:#b3261e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--sand);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:560px;margin:0 auto;min-height:100vh;background:var(--cream);position:relative;padding-bottom:110px}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:700;letter-spacing:-.01em}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,var(--sea) 0%,#134e4a 60%,#2b3a33 100%);color:#fff;padding:34px 22px 30px;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-weight:600}
+  .hero h1{font-size:34px;line-height:1.05;margin:10px 0 12px}
+  .hero h1 span{color:#ffd9b8}
+  .hero p{font-size:15px;opacity:.9;line-height:1.5;max-width:380px}
+  .badge{display:inline-flex;align-items:center;gap:10px;margin-top:18px;background:var(--coral);color:#fff;padding:10px 16px;border-radius:999px;font-weight:700;font-size:15px;box-shadow:0 6px 18px rgba(226,103,63,.35)}
+  .badge b{font-size:22px;font-family:'Fraunces',serif}
+  .period{margin-top:12px;font-size:13px;opacity:.85}
+
+  .section{padding:26px 20px 6px}
+  .section h2{font-size:22px;margin-bottom:4px}
+  .section .sub{color:var(--muted);font-size:14px;margin-bottom:16px}
+
+  .resto-card{display:flex;align-items:center;gap:16px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px;transition:transform .15s, box-shadow .15s}
+  .resto-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(43,36,32,.08)}
+  .resto-logo{width:66px;height:66px;border-radius:18px;display:grid;place-items:center;font-size:32px;flex-shrink:0;color:#fff}
+  .resto-card h3{font-size:20px}
+  .resto-card .meta{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .chev{margin-left:auto;font-size:22px;color:var(--muted)}
+  .resto-block{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-bottom:16px}
+  .rb-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+  .rb-head .resto-logo{width:56px;height:56px;font-size:28px;border-radius:16px}
+  .rb-head h3{font-size:21px}
+  .rb-head .meta{font-size:13px;color:var(--muted);margin-top:2px}
+  .kat-btn{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;margin-top:8px;border-radius:16px;background:color-mix(in srgb,var(--accent) 7%,#fff);border:1px solid color-mix(in srgb,var(--accent) 22%,#fff);transition:transform .12s}
+  .kat-btn:hover{transform:translateX(3px)}
+  .kat-btn:disabled{opacity:.5;cursor:default;transform:none}
+  .kic{width:42px;height:42px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+  .ktx{flex:1;min-width:0}
+  .ktx b{display:block;font-size:15px;color:var(--accent)}
+  .ktx small{display:block;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.35}
+  .kn{font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+  .kat-btn .chev{margin-left:0;font-size:20px}
+  .kat-intro{display:flex;gap:12px;align-items:center;padding:14px;border-radius:16px;background:color-mix(in srgb,var(--accent) 8%,#fff);margin-bottom:14px}
+  .kat-intro .kic{background:#fff}
+  .kat-intro b{display:block;font-size:16px}
+  .kat-intro small{font-size:12.5px;color:var(--muted)}
+
+  .howto{display:grid;gap:10px;margin-top:12px}
+  .step{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.45;color:#4a3f37}
+  .step i{font-style:normal;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--sea)}
+  .ended{margin:20px;padding:18px;border-radius:16px;background:#fde8e1;color:#7a2e18;font-weight:600;text-align:center}
+  footer{text-align:center;font-size:12px;color:var(--muted);padding:26px 20px 10px}
+  .adminlink{display:inline-block;margin-top:12px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:13px;color:var(--ink)}
+
+  /* RESTO VIEW */
+  .topbar{position:sticky;top:0;z-index:5;background:var(--cream);border-bottom:1px solid var(--line)}
+  .topbar-row{display:flex;align-items:center;gap:12px;padding:14px 16px}
+  .back{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:18px;display:grid;place-items:center;flex-shrink:0}
+  .topbar h2{font-size:21px}
+  .topbar .mini{font-size:12px;color:var(--coral);font-weight:700}
+  .tabs{display:flex;gap:8px;padding:0 16px 12px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{white-space:nowrap;padding:9px 12px;font-size:13.5px !important;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:#5a4d43}
+  .tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .list{padding:14px 16px}
+  .empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:14px}
+  .ghead{font-family:'Fraunces',serif;font-weight:700;font-size:18px;margin:10px 4px 10px}
+  .ghead:first-child{margin-top:2px}
+  .item{display:flex;gap:14px;padding:14px;background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px}
+  .item.sel{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}
+  .thumb{width:72px;height:72px;border-radius:14px;display:grid;place-items:center;font-size:34px;flex-shrink:0;background:var(--sand)}
+  .info{flex:1;min-width:0}
+  .info h4{font-size:15px;font-weight:700;line-height:1.3}
+  .info p{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+  .price-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:8px;gap:8px}
+  .old{font-size:12px;color:#a99a8c;text-decoration:line-through}
+  .new{font-size:15px;font-weight:700}
+  .qty{display:flex;align-items:center;gap:6px}
+  .qbtn{width:32px;height:32px;border-radius:50%;font-size:18px;font-weight:700;display:grid;place-items:center;background:var(--sand);color:var(--ink)}
+  .qbtn.plus{background:var(--accent);color:#fff}
+  .qnum{min-width:20px;text-align:center;font-weight:700}
+  .add{padding:8px 16px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;font-size:13px}
+  .vlabel{font-size:11.5px;font-weight:700;color:var(--accent);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+  .vrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-top:1px dashed var(--line)}
+  .vrow.on .vname{color:var(--accent)}
+  .vname{font-size:13.5px;font-weight:600;line-height:1.3}
+  .vname span{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+  .vname s{color:#b5a797}
+  .vrow .add{padding:6px 13px;font-size:12px}
+  .vrow .qbtn{width:28px;height:28px;font-size:16px}
+
+  .cartbar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:calc(100% - 32px);max-width:528px;background:var(--ink);color:#fff;border-radius:18px;padding:12px 14px 12px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 14px 30px rgba(0,0,0,.25);z-index:10}
+  .cartbar .ct{font-size:12px;opacity:.75}
+  .cartbar .tt{font-weight:700;font-size:16px}
+  .cartbar button{margin-left:auto;background:var(--coral);color:#fff;font-weight:700;padding:12px 18px;border-radius:14px}
+
+  /* SHEET */
+  .overlay{position:fixed;inset:0;background:rgba(30,24,20,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+  .sheet{background:var(--cream);width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:22px 20px 26px;animation:up .25s ease}
+  @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .sheet-head h3{font-size:22px}
+  .x{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:16px}
+  .sum-line{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:7px 0;border-bottom:1px dashed var(--line)}
+  .sum-total{display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:var(--muted)}
+  .sum-total.big{color:var(--ink);font-weight:700;font-size:17px}
+  .disc{color:var(--coral)}
+  label{display:block;font-size:13px;font-weight:600;margin:16px 0 6px;color:#4a3f37}
+  input,select,textarea{width:100%;font:inherit;font-size:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent,var(--sea))}
+  textarea{resize:vertical;min-height:70px}
+  .hint{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45}
+  .preview{margin-top:18px;background:#e7f6e9;border-radius:16px;padding:14px 16px;font-size:14px;line-height:1.55;white-space:pre-wrap;color:#1f3b25}
+  .plabel{margin-top:18px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#3f7a4c}
+  .preview{margin-top:6px !important}
+  .hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+  .lang{display:inline-flex;border-radius:999px;padding:3px;background:rgba(255,255,255,.16);flex-shrink:0}
+  .lang button{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;opacity:.8}
+  .lang button.on{background:#fff;color:var(--sea);opacity:1}
+  .lang.dark{background:var(--sand)}
+  .lang.dark button{color:var(--muted)}
+  .lang.dark button.on{background:var(--ink);color:#fff}
+  .wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:18px;padding:15px;border-radius:16px;background:#25d366;color:#fff;font-weight:700;font-size:16px;text-decoration:none}
+  .wa.disabled{background:#b9c9bd;pointer-events:none}
+  .err{color:var(--danger);font-size:12.5px;margin-top:8px;text-align:center}
+
+  /* ADMIN */
+  .adm{--accent:var(--sea)}
+  .adm .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 16px 14px}
+  .adm .card h3{font-size:18px;margin-bottom:2px}
+  .adm .card > .hint{margin-top:2px}
+  .row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .row2 > div{min-width:0}
+  input[type=date]{min-width:0;font-size:15px;padding:12px 10px}
+  .row2 label{margin-top:12px}
+  .rtabs{display:flex;gap:8px;padding:4px 16px 14px}
+  .rtab{flex:1;padding:12px;border-radius:14px;border:1px solid var(--line);background:#fff;font-weight:700}
+  .rtab.active{color:#fff}
+  .ktitle{display:flex;align-items:center;justify-content:space-between;margin:18px 0 8px}
+  .ktitle:first-of-type{margin-top:6px}
+  .ktitle h4{font-size:15px}
+  .mini-btn{padding:7px 12px;border-radius:999px;background:var(--sea);color:#fff;font-size:12.5px;font-weight:700}
+  .arow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 0;border-top:1px dashed var(--line)}
+  .arow .em{width:40px;height:40px;border-radius:12px;background:var(--sand);display:grid;place-items:center;font-size:20px;flex-shrink:0}
+  .arow .tx{flex:1;min-width:0}
+  .arow .nm{font-weight:700;font-size:14px;line-height:1.3}
+  .arow .pr{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;background:#eee4d6;color:#6d5640;margin-left:4px;vertical-align:1px}
+  .tag.off{background:#fde1dc;color:var(--danger)}
+  .icons,.confirm{width:100%;justify-content:flex-end}
+  .icons{display:flex;gap:6px}
+  .ib{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:14px;display:grid;place-items:center}
+  .ib:disabled{opacity:.3;cursor:default}
+  .ib.del{color:var(--danger)}
+  .confirm{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:600;color:var(--danger)}
+  .confirm button{padding:6px 10px;border-radius:10px;font-weight:700;font-size:12px}
+  .confirm .yes{background:var(--danger);color:#fff}
+  .confirm .no{border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .savebar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:calc(100% - 32px);max-width:528px;background:var(--ink);color:#fff;border-radius:18px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 14px 30px rgba(0,0,0,.25);z-index:10;font-size:13px}
+  .savebar .msg{flex:1;line-height:1.35}
+  .savebar .cancel{padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.3)}
+  .savebar .save{padding:11px 16px;border-radius:12px;background:#25b26a;color:#fff;font-weight:700}
+  .savebar .save:disabled{opacity:.5}
+  .status{margin:0 16px 14px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.45}
+  .status.ok{background:#e3f4e8;color:#1f5a33}
+  .status.warn{background:#fff4e6;color:#6d5640;border:1px dashed #e8c79e}
+  .status.bad{background:#fde8e1;color:#7a2e18}
+  .vedit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 36px;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .vedit .vh{grid-column:1 / span 2}
+  .vedit .ib{grid-row:span 2;height:auto}
+  .en-box{margin-top:16px;padding:4px 14px 14px;border-radius:14px;background:#f2f6f9;border:1px solid #dde7ee}
+  .en-title{font-size:13px;font-weight:700;margin-top:10px}
+  .en-title span{font-weight:500;color:var(--muted);font-size:12px}
+  .vedit input{padding:10px 12px;font-size:15px}
+  .switch{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:14px;font-weight:600}
+  .switch input{width:20px;height:20px;accent-color:var(--sea)}
+  .btn{display:block;width:100%;padding:14px;border-radius:14px;font-weight:700;font-size:15px;margin-top:18px;background:var(--sea);color:#fff}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:10px}
+  .linkish{color:var(--sea);font-weight:700;font-size:13px;margin-top:10px}
+  .gate{padding:60px 24px;text-align:center;color:var(--muted)}
+  .gate h2{color:var(--ink);margin-bottom:8px}
+
+  .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--sea);margin:0 auto 14px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .demo{position:fixed;top:8px;left:50%;transform:translateX(-50%);background:#fff4e6;border:1px dashed #e8c79e;color:#6d5640;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:999px;z-index:30}
+  .login{max-width:380px;margin:0 auto;padding:60px 22px 30px}
+  .login h2{text-align:center;font-size:26px;margin-bottom:6px}
+  .login .resto-logo{width:60px;height:60px;font-size:28px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+const DEFAULT = {
+  promo: { diskon: 15, mulai: '2026-11-01', selesai: '2026-12-15' },
+  order: ['junos', 'manna'],
+  resto: {
+    junos: {
+      nama: 'Junos', wa: '6281200000001', warna: '#0f6b6b', logo: '🌴',
+      info: 'Contoh: buka 08.00–22.00 · ±3 menit jalan kaki',
+      menu: {
+        biasa: [
+          {id:'j1', g:'Makanan', n:'Nasi Goreng', d:'Telur mata sapi, kerupuk, acar', e:'🍳',
+            v:[{n:'Ayam', h:50000},{n:'Seafood', h:65000},{n:'Kampung', h:45000}]},
+          {id:'j2', g:'Makanan', n:'Mie Goreng Jawa', d:'Mie kuning, ayam, sayur, acar', h:55000, e:'🍜'},
+          {id:'j3', g:'Makanan', n:'Grilled Fish Sambal Matah', d:'Ikan bakar segar, nasi, sambal matah', e:'🐟',
+            v:[{n:'Tidak pedas', h:95000},{n:'Pedas sedang', h:95000},{n:'Extra pedas', h:95000}]},
+          {id:'j5', g:'Makanan', n:'Gado-Gado', d:'Sayur rebus, tahu, tempe, saus kacang', h:45000, e:'🥗'},
+          {id:'j4', g:'Minuman', n:'Es Kelapa Muda', d:'Kelapa muda utuh', h:30000, e:'🥥'},
+          {id:'j6', g:'Minuman', n:'Kopi Lombok', d:'Kopi robusta lokal', e:'☕',
+            v:[{n:'Panas', h:25000},{n:'Dingin', h:28000},{n:'Susu dingin', h:32000}]},
+          {id:'j7', g:'Minuman', n:'Smoothie', d:'Buah segar + yoghurt', e:'🥤',
+            v:[{n:'Mangga', h:40000},{n:'Berry', h:45000},{n:'Pisang', h:38000}]}
+        ],
+        bundling: [
+          {id:'jb1', n:'Couple Dinner Package', d:'2 main course, 2 minuman, 1 dessert', h:250000, e:'💑'},
+          {id:'jb2', n:'Sunset Snack Package', d:'Platter gorengan, 2 mocktail', h:150000, e:'🌅'}
+        ],
+        catering: [
+          {id:'jc1', n:'Family Catering 4 Pax', d:'Nasi, 3 lauk, sayur, buah, es teh', h:450000, e:'🍱'},
+          {id:'jc2', n:'Family Catering 8 Pax', d:'Nasi, 4 lauk, sayur, buah, es teh', h:850000, e:'🍲'}
+        ]
+      }
+    },
+    manna: {
+      nama: 'Manna', wa: '6281200000002', warna: '#a3492b', logo: '🍽️',
+      info: 'Contoh: buka 10.00–23.00 · ±5 menit jalan kaki',
+      menu: {
+        biasa: [
+          {id:'m1', g:'Makanan', n:'Ayam Taliwang', d:'Ayam bakar khas Lombok, plecing kangkung', e:'🍗',
+            v:[{n:'Tidak pedas', h:75000},{n:'Pedas', h:75000},{n:'Extra pedas', h:75000}]},
+          {id:'m2', g:'Makanan', n:'Beef Burger', d:'Daging sapi, keju, kentang goreng', h:85000, e:'🍔'},
+          {id:'m3', g:'Makanan', n:'Pasta', d:'Pasta dengan pilihan saus', e:'🍝',
+            v:[{n:'Carbonara', h:80000},{n:'Bolognese', h:78000},{n:'Aglio Olio', h:70000}]},
+          {id:'m5', g:'Makanan', n:'Sate Rembiga', d:'Sate sapi bumbu pedas manis, lontong', h:70000, e:'🍢'},
+          {id:'m4', g:'Minuman', n:'Fresh Juice', d:'Buah segar tanpa pengawet', e:'🧃',
+            v:[{n:'Mangga', h:35000},{n:'Semangka', h:30000},{n:'Nanas', h:30000}]},
+          {id:'m6', g:'Minuman', n:'Teh', d:'Teh melati', e:'🍵',
+            v:[{n:'Panas', h:15000},{n:'Es', h:18000},{n:'Lemon tea dingin', h:25000}]},
+          {id:'m7', g:'Minuman', n:'Mocktail', d:'Segar untuk sore hari', h:45000, e:'🍹'}
+        ],
+        bundling: [
+          {id:'mb1', n:'Lombok Taste Package', d:'Ayam taliwang, sate rembiga, 2 minuman', h:220000, e:'🔥'},
+          {id:'mb2', n:'Western Duo Package', d:'2 burger/pasta, 2 juice', h:260000, e:'🍕'}
+        ],
+        catering: [
+          {id:'mc1', n:'Family Catering 4 Pax', d:'Nasi, ayam taliwang, plecing, buah', h:480000, e:'🍱'},
+          {id:'mc2', n:'Family Catering 10 Pax', d:'Prasmanan lengkap + dessert', h:1150000, e:'🥘'}
+        ]
+      }
+    }
+  }
+};
+
+/* ---------- BAHASA / LANGUAGE ---------- */
+const T = {
+  id: {
+    eyebrow:'Brand Collaboration',
+    heroP:'Special offer khusus tamu Gili Amor Boutique Resort. Pilih menu, kirim pesanan lewat WhatsApp, lalu datang dan tunjukkan kunci kamar Anda.',
+    badge:'OFF dengan kunci kamar', valid:'Berlaku', ended:'Promo telah berakhir. Terima kasih atas kunjungan Anda!',
+    pickTitle:'Pilih Restoran', pickSub:'Pilih restoran dan jenis menu yang Anda inginkan',
+    soon:'Segera hadir', nMenu:'menu',
+    howTitle:'Cara Pesan',
+    steps:['Pilih restoran, lalu tekan menu yang Anda inginkan.','Isi nama dan jam kedatangan.','Tekan <b>Kirim via WhatsApp</b>, pesan otomatis tersusun.','Datang sesuai jam, tunjukkan kunci kamar, nikmati diskon {d}%.'],
+    offFor:'OFF untuk tamu Gili Amor', empty:'Belum ada menu di kategori ini.',
+    pickVar:'Pilih varian · mulai', pick:'Pilih', itemsSel:'item dipilih', next:'Lanjut →',
+    orderAt:'Pesanan di', subtotal:'Subtotal', discount:'Diskon Amor Collab', total:'Estimasi total',
+    name:'Nama tamu', namePh:'Contoh: Sarah', time:'Jam kedatangan', keyHint:'Jangan lupa bawa kunci kamar untuk mendapatkan diskon.',
+    preview:'Pratinjau pesan WhatsApp', send:'Kirim via WhatsApp', needInfo:'Isi nama dan jam kedatangan untuk melanjutkan.',
+    back:'Kembali', close:'Tutup', admin:'⚙️ Kelola Menu (Admin)',
+    kat:{ biasa:['Menu Biasa','Menu Biasa','Makanan & minuman satuan, pesan sesuai selera'],
+          bundling:['Bundling Package','Bundling','Paket hemat untuk berdua atau rombongan'],
+          catering:['Family Catering','Family','Paket makan keluarga & grup besar'] },
+    groups:{},
+    greet:h => (h>=4&&h<11)?'pagi':(h>=11&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam',
+    msg:(g,nama,lines,jam) => `Hallo selamat ${g}, saya dengan ${nama}, saya sedang menginap di Gili Amor, saya memesan:\n${lines}\n\ndan akan datang jam ${jam}`,
+    phName:'(nama tamu)', phTime:'(jam kedatangan)', locale:'id-ID'
+  },
+  en: {
+    eyebrow:'Brand Collaboration',
+    heroP:'An exclusive offer for Gili Amor Boutique Resort guests. Choose your dishes, send your order via WhatsApp, then simply show your room key when you arrive.',
+    badge:'OFF with your room key', valid:'Valid', ended:'This promotion has ended. Thank you for visiting!',
+    pickTitle:'Choose a Restaurant', pickSub:'Pick a restaurant and the type of menu you like',
+    soon:'Coming soon', nMenu:'items',
+    howTitle:'How to Order',
+    steps:['Choose a restaurant, then tap the dishes you want.','Enter your name and arrival time.','Tap <b>Send via WhatsApp</b>, your order message is written for you.','Arrive on time, show your room key and enjoy {d}% off.'],
+    offFor:'OFF for Gili Amor guests', empty:'No items in this category yet.',
+    pickVar:'Choose an option · from', pick:'Add', itemsSel:'items selected', next:'Continue →',
+    orderAt:'Your order at', subtotal:'Subtotal', discount:'Amor Collab discount', total:'Estimated total',
+    name:'Guest name', namePh:'e.g. Sarah', time:'Arrival time', keyHint:'Remember to bring your room key to get the discount.',
+    preview:'WhatsApp message preview', send:'Send via WhatsApp', needInfo:'Enter your name and arrival time to continue.',
+    back:'Back', close:'Close', admin:'⚙️ Manage Menu (Admin)',
+    kat:{ biasa:['Regular Menu','Regular','À la carte food & drinks'],
+          bundling:['Bundling Package','Bundles','Value packages for two or for groups'],
+          catering:['Family Catering','Family','Family meals & large groups'] },
+    groups:{ 'Makanan':'Food', 'Minuman':'Drinks', 'Dessert':'Dessert', 'Snack':'Snacks' },
+    greet:h => (h>=4&&h<12)?'good morning':(h>=12&&h<18)?'good afternoon':'good evening',
+    msg:(g,nama,lines,jam) => `Hello, ${g}. My name is ${nama} and I am staying at Gili Amor. I would like to order:\n${lines}\n\nI will arrive at ${jam}`,
+    phName:'(guest name)', phTime:'(arrival time)', locale:'en-GB'
+  }
+};
+let LANG = (() => { try { const v = localStorage.getItem('amor_lang'); if (v === 'id' || v === 'en') return v; } catch(e){}
+  return (navigator.language || 'id').toLowerCase().startsWith('id') ? 'id' : 'en'; })();
+const L = () => T[LANG];
+function setLang(l){ LANG = l; try { localStorage.setItem('amor_lang', l); } catch(e){} render(); }
+const tr = (o, f) => (LANG === 'en' && o[f + '_en']) ? o[f + '_en'] : o[f];
+const langBtn = (dark) => `<div class="lang ${dark?'dark':''}" role="group" aria-label="Language">
+  <button data-lang="id" class="${LANG==='id'?'on':''}">ID</button><button data-lang="en" class="${LANG==='en'?'on':''}">EN</button></div>`;
+
+const KAT = [
+  {k:'biasa', ic:'🍽️'}, {k:'bundling', ic:'🎁'}, {k:'catering', ic:'👨‍👩‍👧‍👦'}
+].map(t => Object.assign(t, {
+  get label(){ return L().kat[t.k][0]; }, get short(){ return L().kat[t.k][1]; }, get desc(){ return L().kat[t.k][2]; },
+  get adminLabel(){ return T.id.kat[t.k][0]; } }));
+
+/* ---------- STATE ---------- */
+const clone = o => JSON.parse(JSON.stringify(o));
+let CFG = clone(DEFAULT);
+const state = {
+  view:'home', resto:null, tab:'biasa', carts:{}, sheet:false, nama:'', jam:'',
+  // admin
+  isAdmin:false, db:null, dbStatus:'none', draft:null, dirty:false, saving:false, saveMsg:'',
+  aResto:'junos', edit:null, confirmDel:null, pendingRender:false
+};
+
+/* ---------- HELPERS ---------- */
+const rp = n => 'Rp ' + Math.round(Number(n)||0).toLocaleString('id-ID');
+const disc = h => (Number(h)||0) * (100 - (Number(CFG.promo.diskon)||0)) / 100;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const color = c => /^#[0-9a-f]{6}$/i.test(c||'') ? c : '#0f6b6b';
+const digits = s => String(s||'').replace(/\D/g,'');
+const waNum = s => { const d = digits(s); return d.startsWith('0') ? '62' + d.slice(1) : d; };
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random()*16|0; return (c === 'x' ? r : (r&3|8)).toString(16); }));
+const fmtDate = d => { try { return new Date(d+'T12:00:00+08:00').toLocaleDateString(L().locale,{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Makassar'}); } catch(e){ return d; } };
+
+function promoStatus(){
+  const now = Date.now();
+  const a = Date.parse(CFG.promo.mulai + 'T00:00:00+08:00');
+  const b = Date.parse(CFG.promo.selesai + 'T23:59:59+08:00');
+  if (now < a) return 'soon';
+  if (now > b) return 'ended';
+  return 'on';
+}
+/* Data dari penyimpanan dianggap tidak tepercaya: rapikan bentuknya */
+function normalize(d){
+  if (!d || typeof d !== 'object' || !d.resto || !d.promo) return null;
+  const out = { promo:{
+      diskon: Math.min(100, Math.max(0, Number(d.promo.diskon)||0)),
+      mulai: /^\d{4}-\d{2}-\d{2}$/.test(d.promo.mulai) ? d.promo.mulai : DEFAULT.promo.mulai,
+      selesai: /^\d{4}-\d{2}-\d{2}$/.test(d.promo.selesai) ? d.promo.selesai : DEFAULT.promo.selesai },
+    order: Array.isArray(d.order) ? d.order.filter(k => d.resto[k]) : Object.keys(d.resto),
+    resto:{} };
+  for (const k of out.order){
+    const r = d.resto[k] || {};
+    const m = r.menu || {};
+    out.resto[k] = { nama:String(r.nama||k), wa:waNum(r.wa), warna:color(r.warna), logo:String(r.logo||'🍽️'),
+      info:String(r.info||''), info_en:String(r.info_en||''), menu:{} };
+    for (const {k:kk} of KAT){
+      out.resto[k].menu[kk] = (Array.isArray(m[kk]) ? m[kk] : []).map(i => {
+        const it = { id:String(i.id||uid()), n:String(i.n||'Menu'), d:String(i.d||''), e:String(i.e||'🍽️') };
+        if (i.g) it.g = String(i.g);
+        if (i.n_en) it.n_en = String(i.n_en);
+        if (i.d_en) it.d_en = String(i.d_en);
+        if (i.off) it.off = true;
+        if (Array.isArray(i.v) && i.v.length) it.v = i.v.map(v => { const o = {n:String(v.n||''), h:Math.max(0, Number(v.h)||0)}; if (v.n_en) o.n_en = String(v.n_en); return o; });
+        else it.h = Math.max(0, Number(i.h)||0);
+        return it;
+      });
+    }
+  }
+  return out.order.length ? out : null;
+}
+
+/* ---------- KERANJANG ---------- */
+function cart(key){ return state.carts[key] || (state.carts[key] = {}); }
+function visible(key, kat){ return (CFG.resto[key].menu[kat] || []).filter(i => !i.off); }
+function cartLines(key){
+  const c = cart(key), out = [];
+  KAT.forEach(({k}) => visible(key, k).forEach(i => {
+    if (i.v) i.v.forEach((v, x) => { const q = c[i.id+'|'+x]||0; if (q) out.push({n:`${i.n} (${v.n})`, h:v.h, q}); });
+    else if (c[i.id] > 0) out.push({n:i.n, h:i.h, q:c[i.id]});
+  }));
+  return out;
+}
+function buildMessage(key){
+  const t = L();
+  const lines = cartLines(key).map(i => `- ${i.q}x ${i.n}`).join('\n');
+  const nama = state.nama.trim() || t.phName;
+  const jam = state.jam ? state.jam.replace(':', '.') : t.phTime;
+  return t.msg(t.greet(new Date().getHours()), nama, lines, jam);
+}
+
+/* ---------- SUPABASE ---------- */
+const CONF = window.AMOR_CONFIG || {};
+const SB_READY = !!(CONF.SUPABASE_URL && CONF.SUPABASE_ANON_KEY && !/XXXX/.test(CONF.SUPABASE_URL) && window.supabase);
+const sb = SB_READY ? window.supabase.createClient(CONF.SUPABASE_URL, CONF.SUPABASE_ANON_KEY) : null;
+const chk = async q => { const r = await q; if (r.error) throw r.error; return r.data; };
+
+async function loadFromSupabase(){
+  const [s, r, m, v] = await Promise.all([
+    chk(sb.from('settings').select('*').eq('id', 1).maybeSingle()),
+    chk(sb.from('restaurants').select('*').order('urutan')),
+    chk(sb.from('menu_items').select('*').order('urutan')),
+    chk(sb.from('menu_variants').select('*').order('urutan'))
+  ]);
+  const cfg = { promo:{ diskon: s ? s.diskon : 15, mulai: s ? s.mulai : DEFAULT.promo.mulai, selesai: s ? s.selesai : DEFAULT.promo.selesai },
+                order:[], resto:{} };
+  (r || []).forEach(x => {
+    cfg.order.push(x.id);
+    cfg.resto[x.id] = { nama:x.nama, wa:x.wa, warna:x.warna, logo:x.logo, info:x.info, info_en:x.info_en,
+                        menu:{ biasa:[], bundling:[], catering:[] } };
+  });
+  const vars = {};
+  (v || []).forEach(x => (vars[x.item_id] = vars[x.item_id] || []).push({ n:x.nama, n_en:x.nama_en || undefined, h:x.harga }));
+  (m || []).forEach(x => {
+    const R = cfg.resto[x.restaurant_id]; if (!R || !R.menu[x.kategori]) return;
+    const o = { id:x.id, n:x.nama, d:x.deskripsi, e:x.emoji };
+    if (x.kelompok) o.g = x.kelompok;
+    if (x.nama_en) o.n_en = x.nama_en;
+    if (x.deskripsi_en) o.d_en = x.deskripsi_en;
+    if (!x.tersedia) o.off = true;
+    if (vars[x.id] && vars[x.id].length) o.v = vars[x.id]; else o.h = x.harga || 0;
+    R.menu[x.kategori].push(o);
+  });
+  return normalize(cfg);
+}
+
+async function saveToSupabase(d){
+  await chk(sb.from('settings').update({ diskon:d.promo.diskon, mulai:d.promo.mulai, selesai:d.promo.selesai }).eq('id', 1));
+  await chk(sb.from('restaurants').upsert(d.order.map((k, i) => { const r = d.resto[k];
+    return { id:k, nama:r.nama, wa:waNum(r.wa), warna:color(r.warna), logo:r.logo, info:r.info, info_en:r.info_en || '', urutan:i + 1 }; })));
+  const rows = [], vrows = [], ids = new Set();
+  d.order.forEach(k => KAT.forEach(({k:kat}) => d.resto[k].menu[kat].forEach((it, i) => {
+    ids.add(it.id);
+    rows.push({ id:it.id, restaurant_id:k, kategori:kat, kelompok:it.g || null, nama:it.n, deskripsi:it.d || '', emoji:it.e || '🍽️',
+                harga: it.v ? null : (Number(it.h) || 0), tersedia: !it.off, urutan:i + 1,
+                nama_en: it.n_en || null, deskripsi_en: it.d_en || null });
+    (it.v || []).forEach((v, j) => vrows.push({ item_id:it.id, nama:v.n, nama_en:v.n_en || null, harga:Number(v.h) || 0, urutan:j + 1 }));
+  })));
+  if (rows.length) await chk(sb.from('menu_items').upsert(rows));
+  const existing = await chk(sb.from('menu_items').select('id'));
+  const del = (existing || []).map(x => x.id).filter(id => !ids.has(id));
+  if (del.length) await chk(sb.from('menu_items').delete().in('id', del));
+  if (ids.size) await chk(sb.from('menu_variants').delete().in('item_id', [...ids]));
+  if (vrows.length) await chk(sb.from('menu_variants').insert(vrows));
+}
+
+/* ---------- AUTH ---------- */
+state.view = 'admin';
+state.session = null;
+state.authMsg = '';
+LANG = 'id';
+
+function loginView(){
+  return `<div class="adm"><div class="login">
+    <div class="resto-logo" style="background:var(--sea);margin:0 auto 14px">⚙️</div>
+    <h2>Admin Amor Collab</h2>
+    <p class="hint" style="text-align:center">Masuk untuk mengelola promo dan menu Junos & Manna.</p>
+    ${SB_READY ? `<form id="loginForm">
+      <label for="l-email">Email</label><input id="l-email" type="email" autocomplete="username" required>
+      <label for="l-pass">Password</label><input id="l-pass" type="password" autocomplete="current-password" required>
+      <div class="err" id="l-err">${esc(state.authMsg)}</div>
+      <button class="btn" type="submit" id="l-btn">Masuk</button>
+    </form>` : `<div class="status bad" style="margin:18px 0 0">config.js belum diisi dengan Project URL dan anon key Supabase.</div>`}
+    <a class="linkish" href="./" style="display:block;text-align:center;margin-top:18px">← Lihat halaman tamu</a>
+  </div></div>`;
+}
+function statusBox(){
+  if (state.saveMsg) return `<div class="status ${state.saveMsg.startsWith('✓')?'ok':'bad'}">${esc(state.saveMsg)}</div>`;
+  if (state.dbStatus === 'loading') return `<div class="status warn">Memuat data dari database…</div>`;
+  if (state.dbStatus === 'error') return `<div class="status bad">Data belum bisa dimuat. Periksa koneksi lalu muat ulang halaman.</div>`;
+  return '';
+}
+function D(){ return state.draft || (state.draft = clone(CFG)); }
+function adminView(){
+  if (!state.session) return loginView();
+  if (!state.isAdmin) return `<div class="gate"><h2>Bukan akun admin</h2><p>Akun ${esc(state.session.user.email)} belum terdaftar sebagai admin.</p><button class="adminlink" data-logout>Keluar</button></div>`;
+  if (state.dbStatus !== 'ok') return `<div class="adm" style="padding-top:20px">${statusBox() || '<div class="status warn">Memuat…</div>'}</div>`;
+  const d = D(), k = state.aResto, r = d.resto[k];
+  const summary = i => i.v ? i.v.map(v => `${esc(v.n)} ${rp(v.h)}`).join(' · ') : rp(i.h);
+  return `
+  <div class="adm">
+    <div class="topbar"><div class="topbar-row">
+      <div><h2>Kelola Menu</h2><div class="mini" style="color:var(--muted)">${esc(state.session.user.email)}</div></div>
+      <div style="margin-left:auto;display:flex;gap:6px">
+        <a class="adminlink" style="margin:0;text-decoration:none" href="./" target="_blank" rel="noopener">👁 Tamu</a>
+        <button class="adminlink" style="margin:0" data-logout>Keluar</button>
+      </div>
+    </div></div>
+    <div style="height:14px"></div>
+    ${statusBox()}
+
+    <div class="card">
+      <h3>Promo</h3>
+      <div class="hint">Berlaku untuk semua restoran.</div>
+      <label for="p-diskon">Diskon (%)</label>
+      <input id="p-diskon" type="number" min="0" max="100" inputmode="numeric" value="${esc(d.promo.diskon)}" data-f="promo.diskon">
+      <div class="row2">
+        <div><label for="p-mulai">Mulai</label><input id="p-mulai" type="date" value="${esc(d.promo.mulai)}" data-f="promo.mulai"></div>
+        <div><label for="p-selesai">Selesai</label><input id="p-selesai" type="date" value="${esc(d.promo.selesai)}" data-f="promo.selesai"></div>
+      </div>
+    </div>
+
+    <div class="rtabs">${d.order.map(x => `<button class="rtab ${x===k?'active':''}" style="${x===k?`background:${color(d.resto[x].warna)};border-color:${color(d.resto[x].warna)}`:''}" data-ar="${esc(x)}">${esc(d.resto[x].nama)}</button>`).join('')}</div>
+
+    <div class="card">
+      <h3>Info Restoran</h3>
+      <label for="r-nama">Nama restoran</label>
+      <input id="r-nama" value="${esc(r.nama)}" data-f="r.nama">
+      <label for="r-wa">Nomor WhatsApp</label>
+      <input id="r-wa" inputmode="tel" value="${esc(r.wa)}" placeholder="62812xxxxxxx" data-f="r.wa">
+      <div class="hint">Boleh diawali 0 atau 62, otomatis diubah ke format WhatsApp. Contoh: 081234567890</div>
+      <label for="r-info">Info singkat (jam buka, jarak)</label>
+      <input id="r-info" value="${esc(r.info)}" data-f="r.info">
+      <label for="r-info-en">Info singkat (English)</label>
+      <input id="r-info-en" value="${esc(r.info_en||'')}" placeholder="Open 08.00–22.00 · 3 min walk" data-f="r.info_en">
+      <div class="row2">
+        <div><label for="r-logo">Logo (emoji)</label><input id="r-logo" value="${esc(r.logo)}" data-f="r.logo"></div>
+        <div><label for="r-warna">Warna</label><input id="r-warna" type="color" value="${color(r.warna)}" data-f="r.warna" style="height:48px;padding:4px"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Menu ${esc(r.nama)}</h3>
+      <div class="hint">Tekan ✏️ untuk edit, ↑↓ untuk urutan, 👁 untuk sembunyikan menu yang sedang habis.</div>
+      ${KAT.map(t => { const list = r.menu[t.k]; return `
+        <div class="ktitle"><h4>${t.adminLabel} <span class="tag">${list.length}</span></h4>
+          <button class="mini-btn" data-new="${t.k}">+ Tambah</button></div>
+        ${list.length ? list.map((i, idx) => `
+          <div class="arow">
+            <div class="em">${esc(i.e)}</div>
+            <div class="tx">
+              <div class="nm">${esc(i.n)}${i.n_en?`<span class="tag">EN ✓</span>`:''}${i.g?`<span class="tag">${esc(i.g)}</span>`:''}${i.off?`<span class="tag off">Disembunyikan</span>`:''}</div>
+              <div class="pr">${summary(i)}</div>
+            </div>
+            ${state.confirmDel === i.id ? `<div class="confirm">Hapus?
+                <button class="yes" data-delyes="${t.k}|${idx}">Ya</button>
+                <button class="no" data-delno>Batal</button></div>`
+            : `<div class="icons">
+                <button class="ib" data-up="${t.k}|${idx}" ${idx===0?'disabled':''} aria-label="Naik">↑</button>
+                <button class="ib" data-down="${t.k}|${idx}" ${idx===list.length-1?'disabled':''} aria-label="Turun">↓</button>
+                <button class="ib" data-hide="${t.k}|${idx}" aria-label="Tampil/sembunyi" title="Tampilkan/sembunyikan">${i.off?'🚫':'👁'}</button>
+                <button class="ib" data-edit="${t.k}|${idx}" aria-label="Edit">✏️</button>
+                <button class="ib del" data-del="${esc(i.id)}" aria-label="Hapus">🗑</button>
+              </div>`}
+          </div>`).join('') : `<div class="hint" style="padding:6px 0 4px">Belum ada menu.</div>`}`; }).join('')}
+    </div>
+
+    <div class="card">
+      <h3>Cadangan</h3>
+      <div class="hint">Salin seluruh data menu (format JSON) untuk disimpan atau dipindahkan ke hosting sendiri.</div>
+      <button class="btn ghost" data-copy>📋 Salin data menu</button>
+      <div class="hint" id="copymsg" style="text-align:center"></div>
+    </div>
+
+    ${state.dirty || state.saving ? `<div class="savebar">
+      <div class="msg">${state.saving ? 'Menyimpan…' : 'Ada perubahan yang belum disimpan'}</div>
+      <button class="cancel" data-discard ${state.saving?'disabled':''}>Batal</button>
+      <button class="save" data-save ${state.saving ? 'disabled':''}>Simpan & Terbitkan</button>
+    </div>` : ''}
+  </div>`;
+}
+
+function editView(){
+  const e = state.edit;
+  const it = e.item;
+  return `
+  <div class="overlay" data-eclose-bg style="--accent:var(--sea)">
+    <div class="sheet adm">
+      <div class="sheet-head"><h3>${e.isNew ? 'Tambah Menu' : 'Edit Menu'}</h3><button class="x" data-eclose aria-label="Tutup">✕</button></div>
+      <label for="e-kat">Kategori</label>
+      <select id="e-kat">${KAT.map(t => `<option value="${t.k}" ${e.kat===t.k?'selected':''}>${t.adminLabel}</option>`).join('')}</select>
+      <label for="e-g">Kelompok (opsional)</label>
+      <input id="e-g" list="glist" value="${esc(it.g||'')}" placeholder="Makanan / Minuman / Dessert">
+      <datalist id="glist"><option value="Makanan"><option value="Minuman"><option value="Dessert"><option value="Snack"></datalist>
+      <div class="row2">
+        <div style="grid-column:span 1"><label for="e-n">Nama menu</label><input id="e-n" value="${esc(it.n)}" placeholder="Nasi Goreng"></div>
+        <div><label for="e-e">Gambar (emoji)</label><input id="e-e" value="${esc(it.e)}" placeholder="🍛"></div>
+      </div>
+      <label for="e-d">Deskripsi</label>
+      <textarea id="e-d" placeholder="Isi / keterangan singkat">${esc(it.d)}</textarea>
+      <div class="en-box">
+        <div class="en-title">🇬🇧 Versi English <span>(opsional, untuk tamu yang memilih EN)</span></div>
+        <label for="e-nen">Name (English)</label>
+        <input id="e-nen" value="${esc(it.n_en||'')}" placeholder="Fried Rice">
+        <label for="e-den">Description (English)</label>
+        <textarea id="e-den" placeholder="Fried egg, crackers, pickles">${esc(it.d_en||'')}</textarea>
+      </div>
+
+      <label class="switch"><input type="checkbox" id="e-hasv" ${e.hasV?'checked':''}> Menu ini punya varian (rasa, level pedas, panas/dingin)</label>
+      ${e.hasV ? `
+        <div class="hint">Isi nama varian (Indonesia & English) dan harga normal masing-masing.</div>
+        ${e.v.map((v, x) => `<div class="vedit">
+            <input data-vn="${x}" value="${esc(v.n)}" placeholder="Nama varian">
+            <input data-vne="${x}" value="${esc(v.n_en||'')}" placeholder="English">
+            <button class="ib del" data-vdel="${x}" aria-label="Hapus varian" ${e.v.length<=1?'disabled':''}>✕</button>
+            <input data-vh="${x}" type="number" inputmode="numeric" min="0" value="${esc(v.h)}" placeholder="Harga (Rp)" class="vh">
+          </div>`).join('')}
+        <button class="linkish" data-vadd>+ Tambah varian</button>`
+      : `<label for="e-h">Harga normal (Rp)</label>
+         <input id="e-h" type="number" inputmode="numeric" min="0" value="${esc(it.h??'')}" placeholder="50000">
+         <div class="hint">Harga setelah diskon dihitung otomatis.</div>`}
+
+      <label class="switch"><input type="checkbox" id="e-show" ${it.off?'':'checked'}> Tampilkan ke tamu</label>
+      <div class="err" id="e-err"></div>
+      <button class="btn" data-esave>${e.isNew ? 'Tambahkan' : 'Simpan perubahan'}</button>
+      <button class="btn ghost" data-eclose>Batal</button>
+    </div>
+  </div>`;
+}
+
+
+/* ---------- RENDER & EVENTS ---------- */
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = adminView();
+  if (state.edit) app.insertAdjacentHTML('beforeend', editView());
+  bind();
+}
+function on(sel, fn){ document.querySelectorAll(sel).forEach(el => el.onclick = e => fn(el, e)); }
+function markDirty(){ state.dirty = true; state.saveMsg = ''; }
+function bind(){
+  const f = document.getElementById('loginForm');
+  if (f) f.onsubmit = async e => {
+    e.preventDefault();
+    const btn = document.getElementById('l-btn'); btn.disabled = true; btn.textContent = 'Memeriksa…';
+    const { error } = await sb.auth.signInWithPassword({ email: document.getElementById('l-email').value.trim(), password: document.getElementById('l-pass').value });
+    if (error) { state.authMsg = 'Email atau password salah.'; render(); }
+  };
+  on('[data-logout]', async () => { await sb.auth.signOut(); });
+  if (state.session && state.isAdmin && state.dbStatus === 'ok') bindAdmin();
+}
+function bindAdmin(){
+  const d = state.draft;
+  // field teks/angka: perbarui draft tanpa render ulang (agar keyboard tidak tertutup)
+  document.querySelectorAll('[data-f]').forEach(inp => {
+    inp.oninput = () => {
+      const f = inp.dataset.f, r = d.resto[state.aResto];
+      if (f === 'promo.diskon') d.promo.diskon = Math.min(100, Math.max(0, Number(inp.value)||0));
+      else if (f === 'promo.mulai') d.promo.mulai = inp.value;
+      else if (f === 'promo.selesai') d.promo.selesai = inp.value;
+      else if (f === 'r.wa') r.wa = digits(inp.value);
+      else r[f.slice(2)] = inp.value;
+      if (!state.dirty) { markDirty(); renderKeepFocus(inp.id); }
+    };
+  });
+  on('[data-ar]', b => { state.aResto = b.dataset.ar; state.confirmDel = null; render(); });
+  const at = s => { const [k, i] = s.split('|'); return [d.resto[state.aResto].menu[k], Number(i), k]; };
+  on('[data-up]', b => { const [l,i] = at(b.dataset.up); [l[i-1], l[i]] = [l[i], l[i-1]]; markDirty(); render(); });
+  on('[data-down]', b => { const [l,i] = at(b.dataset.down); [l[i+1], l[i]] = [l[i], l[i+1]]; markDirty(); render(); });
+  on('[data-hide]', b => { const [l,i] = at(b.dataset.hide); if (l[i].off) delete l[i].off; else l[i].off = true; markDirty(); render(); });
+  on('[data-del]', b => { state.confirmDel = b.dataset.del; render(); });
+  on('[data-delno]', () => { state.confirmDel = null; render(); });
+  on('[data-delyes]', b => { const [l,i] = at(b.dataset.delyes); l.splice(i,1); state.confirmDel = null; markDirty(); render(); });
+  on('[data-edit]', b => { const [l,i,k] = at(b.dataset.edit); openEditor(k, l[i], false); });
+  on('[data-new]', b => openEditor(b.dataset.new, {id:uid(), n:'', d:'', e:'🍽️', h:''}, true));
+  on('[data-discard]', () => { state.draft = clone(CFG); state.dirty = false; state.saveMsg = ''; render(); });
+  on('[data-save]', save);
+  on('[data-copy]', async () => {
+    const m = document.getElementById('copymsg');
+    try { await navigator.clipboard.writeText(JSON.stringify(state.draft, null, 2)); m.textContent = '✓ Data tersalin ke clipboard'; }
+    catch(e){ m.textContent = 'Gagal menyalin di perangkat ini.'; }
+  });
+
+  if (state.edit) bindEditor();
+}
+function renderKeepFocus(id){
+  const el = document.getElementById(id); const pos = el && el.selectionStart;
+  render();
+  const n = document.getElementById(id);
+  if (n){ n.focus(); try { if (pos != null) n.setSelectionRange(pos, pos); } catch(e){} }
+}
+
+function openEditor(kat, item, isNew){
+  const it = clone(item);
+  state.edit = { kat, origKat:kat, isNew, item:it, hasV: !!it.v, v: it.v ? clone(it.v) : [{n:'',h:''},{n:'',h:''}] };
+  render();
+}
+function readEditor(){
+  const e = state.edit, $ = id => document.getElementById(id);
+  e.kat = $('e-kat').value;
+  e.item.g = $('e-g').value.trim();
+  e.item.n = $('e-n').value;
+  e.item.e = $('e-e').value;
+  e.item.d = $('e-d').value;
+  e.item.n_en = $('e-nen').value;
+  e.item.d_en = $('e-den').value;
+  e.item.off = !$('e-show').checked;
+  if (e.hasV) e.v = e.v.map((v, x) => ({ n: document.querySelector(`[data-vn="${x}"]`).value, n_en: document.querySelector(`[data-vne="${x}"]`).value, h: document.querySelector(`[data-vh="${x}"]`).value }));
+  else e.item.h = $('e-h').value;
+}
+function bindEditor(){
+  const e = state.edit;
+  on('[data-eclose]', () => { state.edit = null; render(); });
+  on('[data-eclose-bg]', (o, ev) => { if (ev.target === o){ state.edit = null; render(); } });
+  document.getElementById('e-hasv').onchange = ev => { readEditor(); e.hasV = ev.target.checked; render(); };
+  on('[data-vadd]', () => { readEditor(); e.v.push({n:'',h:''}); render(); });
+  on('[data-vdel]', b => { readEditor(); e.v.splice(Number(b.dataset.vdel),1); render(); });
+  on('[data-esave]', () => {
+    readEditor();
+    const err = document.getElementById('e-err');
+    const it = e.item;
+    if (!it.n.trim()) { err.textContent = 'Nama menu wajib diisi.'; return; }
+    const out = { id:it.id, n:it.n.trim(), d:it.d.trim(), e:(it.e.trim()||'🍽️') };
+    if (it.g) out.g = it.g;
+    if (it.n_en && it.n_en.trim()) out.n_en = it.n_en.trim();
+    if (it.d_en && it.d_en.trim()) out.d_en = it.d_en.trim();
+    if (it.off) out.off = true;
+    if (e.hasV) {
+      const v = e.v.filter(x => String(x.n).trim()).map(x => { const o = {n:String(x.n).trim(), h:Math.max(0, Number(x.h)||0)}; if (String(x.n_en||'').trim()) o.n_en = String(x.n_en).trim(); return o; });
+      if (!v.length) { err.textContent = 'Isi minimal satu varian.'; return; }
+      if (v.some(x => !x.h)) { err.textContent = 'Setiap varian harus punya harga.'; return; }
+      out.v = v;
+    } else {
+      const h = Number(it.h);
+      if (!h || h < 0) { err.textContent = 'Harga wajib diisi.'; return; }
+      out.h = h;
+    }
+    const menu = state.draft.resto[state.aResto].menu;
+    if (!e.isNew) {
+      const src = menu[e.origKat], idx = src.findIndex(x => x.id === it.id);
+      if (e.origKat === e.kat) src[idx] = out;
+      else { src.splice(idx, 1); menu[e.kat].push(out); }
+    } else menu[e.kat].push(out);
+    state.edit = null; markDirty(); render();
+  });
+}
+
+
+async function save(){
+  if (state.saving) return;
+  const d = normalize(state.draft);
+  if (!d) { state.saveMsg = 'Data tidak valid.'; render(); return; }
+  if (d.promo.selesai < d.promo.mulai) { state.saveMsg = 'Tanggal selesai promo harus setelah tanggal mulai.'; render(); return; }
+  state.saving = true; render();
+  try {
+    await saveToSupabase(d);
+    CFG = await loadFromSupabase(); state.draft = clone(CFG); state.dirty = false;
+    state.saveMsg = '✓ Tersimpan. Menu baru sudah tampil di halaman tamu.';
+  } catch(err) {
+    console.error(err);
+    state.saveMsg = 'Gagal menyimpan: ' + (err && err.message ? err.message : 'coba lagi sebentar.');
+  }
+  state.saving = false; render();
+}
+
+async function afterLogin(session){
+  state.session = session; state.authMsg = '';
+  state.isAdmin = false; state.dbStatus = 'loading'; state.draft = null; state.dirty = false;
+  if (!session) { state.dbStatus = 'none'; render(); return; }
+  render();
+  try {
+    const me = await chk(sb.from('admins').select('user_id').eq('user_id', session.user.id).maybeSingle());
+    state.isAdmin = !!me;
+    if (state.isAdmin) { CFG = await loadFromSupabase(); state.dbStatus = 'ok'; }
+  } catch(e) { console.error(e); state.dbStatus = 'error'; }
+  render();
+}
+
+window.addEventListener('beforeunload', e => { if (state.dirty) { e.preventDefault(); e.returnValue = ''; } });
+if (SB_READY) {
+  let current = undefined;
+  sb.auth.onAuthStateChange((ev, session) => {
+    const id = session ? session.user.id : null;
+    if (id === current) { state.session = session; return; }   // token refresh: jangan muat ulang
+    current = id;
+    setTimeout(() => afterLogin(session), 0);
+  });
+}
+render();
+
+</script>
+</body>
+</html>
